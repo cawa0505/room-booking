@@ -7,12 +7,22 @@ interface IPropsFromState {
   readonly rooms: IRoom[]
 }
 
-class Rooms extends React.Component<IPropsFromState>{
+class Rooms extends React.Component<IPropsFromState, IPropsFromState>{
+
+  public state = {
+    rooms: [{ name: 'hello'}]
+  }
+
+  public async componentDidMount() {
+    const result = await fetch('/api/room');
+    const rooms = await result.json();
+    this.setState({ rooms });
+  }
 
   public render(){
     return <div>
       {
-        this.props.rooms.map(room => <p key={room.name}>{room.name}</p>)
+        this.state.rooms.map(room => <p key={room.name}>{room.name}</p>)
       }
     </div>
   }
