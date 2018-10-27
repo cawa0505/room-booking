@@ -1,8 +1,16 @@
-import { IRoom } from './room.interface';
 import { RoomActionTypes } from './room.actionTypes';
 
-export function getAllRooms(rooms?: IRoom[]) {
+function getAllSuccess(rooms) {
   return {
-    type: RoomActionTypes.GET_ALL_ROOMS
+    type: RoomActionTypes.GetAll,
+    payload: rooms
+  }
+}
+
+export function getAll(){
+  return async (dispatch) => {
+    const result = await fetch('/api/room');
+    const rooms = await result.json();
+    dispatch(getAllSuccess(rooms));
   }
 }

@@ -1,10 +1,10 @@
 import { RoomActionTypes } from './room.actionTypes';
 
-const initialState = [{ name: "Roomy"}];
+const initialState = [];
 
 const reducer = (state = initialState, action) => {
   switch(action.type){
-    case RoomActionTypes.GET_ALL_ROOMS:
+    case RoomActionTypes.GetAll:
       return action.payload; 
     default:
       return state;
