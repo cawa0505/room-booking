@@ -1,6 +1,6 @@
 import { RoomActionTypes } from './room.actionTypes';
 
-function getAllSuccess(rooms) {
+export function getAllSuccess(rooms) {
   return {
     type: RoomActionTypes.GetAll,
     payload: rooms
