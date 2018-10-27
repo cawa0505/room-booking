@@ -40,6 +40,15 @@ namespace RoomBooking.Controllers
           }
           return item;
         }
-        
-    }
-}
+
+        [HttpPost]
+        public IActionResult Create(Room room)
+        {
+          _context.Rooms.Add(room);
+          _context.SaveChanges();
+
+          return CreatedAtRoute("GetTodo", new { id = room.Id }, room);
+        }
+
+  }
+} 
