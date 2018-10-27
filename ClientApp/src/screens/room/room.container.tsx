@@ -9,7 +9,7 @@ interface IPropsFromState {
   readonly getAll: () => any
 }
 
-class Rooms extends React.Component<IPropsFromState, IPropsFromState>{
+export class Rooms extends React.Component<IPropsFromState, IPropsFromState>{
 
   public async componentDidMount() {
     await this.props.getAll();
