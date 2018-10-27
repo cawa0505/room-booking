@@ -4,13 +4,16 @@ import { IRoom } from './room.interface';
 import { IApplicationState } from '../../store/configureStore';
 
 interface IPropsFromState {
-  readonly rooms: IRoom[] 
+  readonly rooms: IRoom[]
 }
 
 class Rooms extends React.Component<IPropsFromState>{
+
   public render(){
     return <div>
-      <h1>Hello</h1>
+      {
+        this.props.rooms.map(room => <p key={room.name}>{room.name}</p>)
+      }
     </div>
   }
 }

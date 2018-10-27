@@ -1,17 +1,13 @@
-import { combineReducers, createStore, applyMiddleware, compose, Dispatch, Action, AnyAction } from 'redux';
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { IRoomState } from '../screens/room/room.interface';
+import { IRoom } from '../screens/room/room.interface';
 import roomsReducer from '../screens/room/room.reducer';
 
-export interface IConnectedReduxProps<A extends Action = AnyAction> {
-  dispatch: Dispatch<A>
-}
-
 export interface IApplicationState {
-  readonly rooms: IRoomState
+  readonly rooms: IRoom[]
 }
 
-const rootReducer = combineReducers<IApplicationState>({ 
+const rootReducer = combineReducers({ 
   rooms: roomsReducer
 });
 

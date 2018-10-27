@@ -23,6 +23,12 @@ create-react-app client-app --scripts-version=react-scripts-ts
 mv client-app ClientApp
 ```
 
+## Not setting env variable properly
+
+```bash
+dotnet run --environment="Development"
+```
+
 ###  Adding redux
 
 ```bash
