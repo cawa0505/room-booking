@@ -1,4 +1,5 @@
 import { RoomActionTypes } from './room.actionTypes';
+import axios from 'axios';
 
 export function getAllSuccess(rooms) {
   return {
@@ -9,8 +10,7 @@ export function getAllSuccess(rooms) {
 
 export function getAll(){
   return async (dispatch) => {
-    const result = await fetch('/api/room');
-    const rooms = await result.json();
+    const { data: { rooms } } = await axios.get('/api/room');
     dispatch(getAllSuccess(rooms));
   }
 }
