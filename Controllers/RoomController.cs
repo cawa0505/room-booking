@@ -11,9 +11,9 @@ namespace RoomBooking.Controllers
     [ApiController]
     public class RoomController : Controller
     {
-        private readonly RoomContext _context;
+        private readonly RoomBookingContext _context;
 
-        public RoomController(RoomContext context)
+        public RoomController(RoomBookingContext context)
         {
           _context = context;
 
