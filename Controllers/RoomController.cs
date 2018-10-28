@@ -8,6 +8,7 @@ using RoomBooking.Models;
 namespace RoomBooking.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
     public class RoomController : Controller
     {
@@ -42,10 +43,10 @@ namespace RoomBooking.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Room room)
+        public async Task<IActionResult> Create([FromBody] Room room)
         {
-          _context.Rooms.Add(room);
-          _context.SaveChanges();
+          await _context.Rooms.AddAsync(room);
+          await _context.SaveChangesAsync();
 
           return CreatedAtRoute("GetRoom", new { id = room.Id }, room);
         }
