@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IRoom } from './room.interface';
+import { Container, List } from 'semantic-ui-react';
 import { IApplicationState } from '../../store/configureStore';
 import * as roomActions from './room.actions';
 
@@ -15,12 +16,17 @@ export class Rooms extends React.Component<IPropsFromState, IPropsFromState>{
     await this.props.getAll();
   }
 
+  public renderList = (rooms) => rooms.map(room => <List.Item key={room.id}>{room.name}</List.Item>)
+
   public render(){
-    return <div>
-      {
-        this.props.rooms.map(room => <p key={room.name}>{room.name}</p>)
-      }
-    </div>
+    const { rooms } = this.props;
+    return (
+      <Container>
+        <List divided={true} relaxed={true}>
+          {this.renderList(rooms)}
+        </List>
+      </Container>
+    );
   }
 }
 
