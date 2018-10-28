@@ -23,10 +23,24 @@ create-react-app client-app --scripts-version=react-scripts-ts
 mv client-app ClientApp
 ```
 
-## Not setting env variable properly
+### Not setting env variable properly
 
 ```bash
 dotnet run --environment="Development"
+```
+
+### Adding a SQLLite database
+
+https://docs.microsoft.com/sv-se/ef/core/get-started/netcore/new-db-sqlite
+
+#### Not running migrations
+
+CLI commands where not referenced inside of .csproj-file:
+
+https://github.com/aspnet/EntityFrameworkCore/issues/8996#issuecomment-400154414
+
+```
+<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" /> <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
 ```
 
 ###  Adding redux
