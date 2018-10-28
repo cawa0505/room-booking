@@ -6,7 +6,7 @@
 
 ### Setting up new .NET Core Project with React Template
 
-> Docs: https://docs.microsoft.com/en-us/aspnet/core/client-side/spa/react?view=aspnetcore-2.1&tabs=visual-studio
+* [.NET Core WebApi Docs](https://docs.microsoft.com/en-us/aspnet/core/client-side/spa/react?view=aspnetcore-2.1&tabs=visual-studio)
 
 ```bash
 dotnet new react -o project-name
@@ -23,36 +23,54 @@ create-react-app client-app --scripts-version=react-scripts-ts
 mv client-app ClientApp
 ```
 
-### Not setting env variable properly
-
-```bash
-dotnet run --environment="Development"
-```
-
-### Adding a SQLLite database
-
-https://docs.microsoft.com/sv-se/ef/core/get-started/netcore/new-db-sqlite
-
-#### Not running migrations
-
-CLI commands where not referenced inside of .csproj-file:
-
-https://github.com/aspnet/EntityFrameworkCore/issues/8996#issuecomment-400154414
-
-```
-<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" /> <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
-```
-
-###  Adding redux
+### Adding redux
 
 ```bash
 yarn add redux react-redux redux-thunk
 ```
 
-### Adding semantic ui
+## Running
 
+```bash
+dotnet run
 ```
-yarn add semantic-ui-react
+
+### Running and setting env variable manually
+
+```bash
+dotnet run --environment="Development"
+```
+
+## Adding a Database
+
+### Adding a SQLLite database
+
+* [EF Core - New Database](https://docs.microsoft.com/sv-se/ef/core/get-started/aspnetcore/new-db?tabs=visual-studio)
+
+#### EF CLI commands not found when running `dotnet`
+
+CLI commands where not referenced inside of .csproj-file:
+
+* https://github.com/aspnet/EntityFrameworkCore/issues/8996#issuecomment-400154414
+
+Fix: 
+```csproj
+<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" /> 
+<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+```
+
+#### Running the migrations
+
+```bash
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
+
+
+## Testing
+
+```bash
+yarn test
 ```
 
 ## Important links
