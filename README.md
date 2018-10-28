@@ -66,6 +66,9 @@ dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
+### Adding JWT
+
+https://www.c-sharpcorner.com/article/jwt-json-web-token-authentication-in-asp-net-core/
 
 ## Testing
 
