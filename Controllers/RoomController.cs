@@ -20,7 +20,12 @@ namespace RoomBooking.Controllers
 
           if (_context.Rooms.Count() == 0)
             {
-                _context.Rooms.Add(new Room { Name = "A302" });
+                _context.Rooms.Add(new Room { 
+                  Location = "A302",
+                  Floor = 3,
+                  Size = 6,
+                  Type = RoomType.Group
+                  });
                 _context.SaveChanges();
             }
         }
