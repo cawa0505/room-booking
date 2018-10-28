@@ -2,13 +2,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RoomBooking.Models
 {
-    public class RoomContext : DbContext
+    public class RoomBookingContext : DbContext
     {
-        public RoomContext(DbContextOptions<RoomContext> options)
+        public RoomBookingContext(DbContextOptions<RoomBookingContext> options)
             : base(options)
         {
         }
-
         public DbSet<Room> Rooms { get; set; }
     }
 }
