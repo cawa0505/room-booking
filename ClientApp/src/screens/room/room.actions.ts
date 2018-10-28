@@ -10,7 +10,7 @@ export function getAllSuccess(rooms) {
 
 export function getAll(){
   return async (dispatch) => {
-    const { data: { rooms } } = await axios.get('/api/room');
-    dispatch(getAllSuccess(rooms));
+    const { data } = await axios.get('/api/room');
+    dispatch(getAllSuccess(data));
   }
 }

@@ -50,10 +50,10 @@ describe('[@room]', () => {
     })
 
     it('should populate redux store with all rooms => [@room]: GetAll', async () => {
-      const mockData = { rooms: [{ name: 'A402' }] };
+      const mockData =  [{ name: 'A402' }] ;
 
       const expectedActions = [
-        { type: RoomActionTypes.GetAll , payload: [{ name: 'A402' }] },
+        { type: RoomActionTypes.GetAll , payload: mockData },
       ]
 
       axios.get.mockImplementationOnce(() =>
@@ -74,11 +74,11 @@ describe('[@room]', () => {
 
     it('should show a list of rooms', async () => {
 
-      const mockData = { rooms: [{ name: 'A402' }] };
+      const mockData = [{ name: 'A402' }];
       const mockCallback = () => Promise.resolve({ data: mockData })
       axios.get.mockImplementationOnce(mockCallback);
 
-      const { container } = render(<Rooms rooms={mockData.rooms} getAll={() => {}} />);
+      const { container } = render(<Rooms rooms={mockData} getAll={() => {}} />);
       expect(container);
     })
   });
