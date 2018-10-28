@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { List } from 'semantic-ui-react';
+import { List, Container, Divider } from 'semantic-ui-react';
 import { IRoom } from '../room.interface';
 import * as actions from '../room.actions';
+import CreateRoom from './CreateRoom';
 
 interface IPropsFromState {
   readonly rooms: IRoom[]
   readonly getAll: () => actions.IGetAll
+  readonly create: (newRoom) => any
 }
 
 export class RoomList extends React.Component<IPropsFromState>{
@@ -17,11 +19,15 @@ export class RoomList extends React.Component<IPropsFromState>{
   public renderList = (rooms) => rooms.map(room => <List.Item key={room.id}>{room.name}</List.Item>)
 
   public render(){
-    const { rooms } = this.props;
+    const { rooms, create } = this.props;
     return (
-        <List divided={true} relaxed={true}>
-          {this.renderList(rooms)}
-        </List>
+        <Container>
+          <CreateRoom create={create} />
+          <Divider />
+          <List divided={true} relaxed={true}>
+            {this.renderList(rooms)}
+          </List>
+        </Container>
     )
   }
 }

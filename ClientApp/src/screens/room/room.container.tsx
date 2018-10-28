@@ -9,7 +9,8 @@ function mapStateToProps({ rooms }: IApplicationState){
 
 function mapDispatchToProps(dispatch){
   return {
-    getAll: () => dispatch(actions.getAll())
+    getAll: () => dispatch(actions.getAll()),
+    create: (newRoom) => dispatch(actions.create(newRoom))
   }
 }
 

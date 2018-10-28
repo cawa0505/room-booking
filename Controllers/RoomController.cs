@@ -47,7 +47,7 @@ namespace RoomBooking.Controllers
           _context.Rooms.Add(room);
           _context.SaveChanges();
 
-          return CreatedAtRoute("GetTodo", new { id = room.Id }, room);
+          return CreatedAtRoute("GetRoom", new { id = room.Id }, room);
         }
 
   }

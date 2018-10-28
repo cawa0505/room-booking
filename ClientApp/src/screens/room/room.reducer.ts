@@ -6,6 +6,8 @@ export function reducer(state: IRoom[] = [], action: RoomAction): IRoom[] {
   switch(action.type){
     case RoomActionTypes.GetAll:
       return action.payload; 
+    case RoomActionTypes.Create:
+      return [...state, action.payload];
     default:
       return state;
   }
