@@ -16,7 +16,7 @@ export class RoomList extends React.Component<IPropsFromState>{
     await this.props.getAll();
   }
 
-  public renderList = (rooms) => rooms.map(room => <List.Item key={room.id}>{room.name}</List.Item>)
+  public renderList = (rooms) => rooms.map(room => <List.Item key={room.id}>{room.location}</List.Item>)
 
   public render(){
     const { rooms, create } = this.props;

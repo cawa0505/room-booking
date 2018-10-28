@@ -1,4 +1,7 @@
 export interface IRoom {
   id: number;
-  name: string;
+  location: string;
+  floor: number;
+  size: number;
+  type: number;
 }
