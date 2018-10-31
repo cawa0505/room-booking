@@ -1,6 +1,14 @@
 import * as React from 'react';
 
-export class Reservations extends React.Component {
+interface IPropsFromState {
+  readonly getAll: () => any
+}
+
+export class Reservations extends React.Component<IPropsFromState> {
+
+  public componentWillMount(){
+    this.props.getAll();
+  }
 
   public render(){
     return null;
