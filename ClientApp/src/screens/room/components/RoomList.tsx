@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { List, Container, Divider } from 'semantic-ui-react';
+import { List, Container, Divider, Header} from 'semantic-ui-react';
+import { format } from 'date-fns';
 import { IRoom } from '../room.interface';
 import * as actions from '../room.actions';
 import CreateRoom from './CreateRoom';
@@ -16,7 +17,26 @@ export class RoomList extends React.Component<IPropsFromState>{
     await this.props.getAll();
   }
 
-  public renderList = (rooms) => rooms.map(room => <List.Item key={room.id}>{room.location}</List.Item>)
+  public renderList = (rooms) => rooms.map(room => 
+    <List.Item key={room.id}>
+      <Header as="h2">{room.location}</Header>
+      <List>
+        {room.reservations.map(reservation => 
+          <List.Item key={reservation.id}>
+            <p>
+              <List.Icon name="checked calendar" />
+              <strong>
+                { format(reservation.startTime, 'dddd - DD/MM')}
+              </strong>
+            </p>
+            { format(reservation.startTime, 'HH:mm')  } 
+            - 
+            { format(reservation.endTime, 'HH:mm')  }
+            </List.Item>
+          )
+        }
+      </List>
+    </List.Item>)
 
   public render(){
     const { rooms, create } = this.props;
