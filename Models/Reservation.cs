@@ -7,7 +7,7 @@ namespace RoomBooking.Models
         public long Id { get; set; }
         public string ReservedBy { get; set; }
 
-        public Room Room {get; set;}
+        public long RoomId {get; set;}
 
         public DateTime StartTime { get; set;}
 
@@ -15,12 +15,12 @@ namespace RoomBooking.Models
 
         public double Length {get; set;}
 
-        public Reservation(string reservedBy, DateTime startTime, DateTime endTime, Room bookedRoom)
+        public Reservation(string reservedBy, DateTime startTime, DateTime endTime, long roomId)
         {
             ReservedBy = reservedBy;
             StartTime = startTime;
             EndTime = endTime;
-            Room = bookedRoom;
+            RoomId = roomId;
             Length = (endTime - startTime).TotalHours;
         }
     }

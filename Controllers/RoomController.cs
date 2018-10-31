@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RoomBooking.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace RoomBooking.Controllers
 {
@@ -33,7 +34,10 @@ namespace RoomBooking.Controllers
         [HttpGet]
         public ActionResult<List<Room>> GetAll()
         {
-          return _context.Rooms.ToList();
+          return _context
+            .Rooms
+            .Include(room => room.Reservations)
+            .ToList();
         }
         
         [HttpGet("{id}", Name = "GetRoom")]

@@ -84,3 +84,6 @@ yarn test
 * https://github.com/piotrwitek/react-redux-typescript-guide
   - Redux + TypeScript Guide
 * https://dev.to/resir014/redux-4--typescript-29-a-type-safe-approach-2lf4
+* https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/existing-db?view=aspnetcore-2.0
+* https://docs.microsoft.com/en-us/ef/core/querying/related-data?view=aspnetcore-2.0
+* https://stackoverflow.com/questions/39107228/entity-framework-core-does-not-contain-a-definition-for-include/39107344
