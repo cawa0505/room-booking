@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "outDir": "build/dist",
     "module": "esnext",
-    "target": "es5",
+    "target": "es2016",
     "lib": ["es6", "dom"],
     "sourceMap": true,
     "allowJs": true,
@@ -17,7 +17,7 @@
     "importHelpers": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
   },
   "exclude": [
     "node_modules",
