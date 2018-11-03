@@ -70,6 +70,12 @@ dotnet ef database update
 
 https://www.c-sharpcorner.com/article/jwt-json-web-token-authentication-in-asp-net-core/
 
+### Adding login
+
+https://fullstackmark.com/post/13/jwt-authentication-with-aspnet-core-2-web-api-angular-5-net-core-identity-and-facebook-login
+https://stackoverflow.com/questions/28531201/entitytype-identityuserlogin-has-no-key-defined-define-the-key-for-this-entit
+
+
 ## Testing
 
 ```bash
