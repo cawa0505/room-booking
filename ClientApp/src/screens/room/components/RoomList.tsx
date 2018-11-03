@@ -4,7 +4,8 @@ import { format } from 'date-fns';
 import { IRoom } from '../room.interface';
 import * as actions from '../room.actions';
 import CreateRoom from './CreateRoom';
-import { constructDate, generateDays, generateTimeSlots } from '../../../helpers';
+import { generateDays, generateTimeSlots } from '../../../helpers';
+import TimeSlotCell from './TimeSlotCell';
 
 interface IPropsFromState {
   readonly rooms: IRoom[]
@@ -15,6 +16,7 @@ interface IPropsFromState {
 export class RoomList extends React.Component<IPropsFromState>{
 
   public state = {
+    days: [],
     timeSlots: [],
     selectedDate: '',
     selectedRoom: {
@@ -46,30 +48,44 @@ export class RoomList extends React.Component<IPropsFromState>{
 
   public async componentDidMount() {
     await this.props.getAll();
-    this.setState({ timeSlots: generateTimeSlots()});
+    this.setState({ 
+      timeSlots: generateTimeSlots(),
+      days: generateDays()
+    });
   }
 
-  public renderTableHeader = () => generateDays().map((day) => 
+  public selectDate = (date) => {
+    this.setState({selectedDate: date });
+  }
+
+  public renderTableHeader = () => this.state.days.map((day) => 
     <Table.HeaderCell key={format(day)}>
       <span>{format(day, 'ddd')}</span>
       <p>{format(day, 'MM/DD')}</p>
     </Table.HeaderCell>
   )
 
-  public selectDate = (timeSlot, day) => {
-    const date = constructDate(timeSlot, day);
-    this.setState({selectedDate: date });
-  }
-
-  public renderTimeSlots = () => 
+  public renderTimeSlotRows = () => 
       this.state.timeSlots.map(timeSlot => {
         return(
           <Table.Row key={format(timeSlot, 'HH:mm')}>
-            {generateDays().map(day => <TimeSlotCell />)}
-          )}
-        </Table.Row>
-      )})
+            {this.renderTimeSlotCells(timeSlot)}
+          </Table.Row>
+        )
+      })
   
+  public renderTimeSlotCells = (timeSlot) =>
+    this.state.days.map(day => (
+        <TimeSlotCell 
+          day={day} 
+          timeSlot={timeSlot} 
+          reservations={this.state.selectedRoom.reservations}
+          selectedDate={this.state.selectedDate}
+          selectDate={this.selectDate}
+        />
+      )
+    )
+
   public renderTable = () => {
     return(
       <Table columns={5} celled={true} compact={true} unstackable={true}>
@@ -79,7 +95,7 @@ export class RoomList extends React.Component<IPropsFromState>{
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {this.renderTimeSlots()}
+          {this.renderTimeSlotRows()}
         </Table.Body>
       </Table>
     )
@@ -96,5 +112,6 @@ export class RoomList extends React.Component<IPropsFromState>{
     )
   }
 }
+
 
 export default RoomList;

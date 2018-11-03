@@ -5,8 +5,10 @@ import { constructDate } from '../../../helpers';
 
 interface ITimeSlotProps{
   readonly timeSlot: string;
-  readonly day: string;
-  readonly reservations
+  readonly day: Date;
+  readonly reservations;
+  readonly selectDate: (date) => any;
+  readonly selectedDate: string;
 }
 
 class TimeSlotCell extends React.PureComponent<ITimeSlotProps, {}>{
@@ -33,7 +35,7 @@ class TimeSlotCell extends React.PureComponent<ITimeSlotProps, {}>{
   public render() {
     const { timeSlot, day } = this.props;
     const reserved = this.checkIfReserved();
-    const selected = isEqual(constructDate(timeSlot, day), new Date(this.props.selected));
+    const selected = isEqual(constructDate(timeSlot, day), new Date(this.props.selectedDate));
     return (
       <Table.Cell
         style={{ padding: '.5em .7em', cursor: 'pointer' }}
@@ -47,5 +49,8 @@ class TimeSlotCell extends React.PureComponent<ITimeSlotProps, {}>{
         {format(timeSlot, 'HH:mm')}
 
       </Table.Cell>
+    )
   }
 }
+
+export default TimeSlotCell;

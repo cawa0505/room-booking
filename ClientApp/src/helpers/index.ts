@@ -10,7 +10,7 @@ export function constructDate(timeSlot, day){
   return date;
 }
 
-export function generateDays {
+export function generateDays() {
   const numberOfDays = 5;
   const days: Date[] = [];
   for(let i = 0; i < numberOfDays; i++){
