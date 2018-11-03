@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Divider, Table } from 'semantic-ui-react';
+import { Container, Divider, Table, List } from 'semantic-ui-react';
 import { format } from 'date-fns';
 import { IRoom } from '../room.interface';
 import * as actions from '../room.actions';
@@ -9,8 +9,10 @@ import TimeSlotCell from './TimeSlotCell';
 
 interface IPropsFromState {
   readonly rooms: IRoom[]
+  readonly selectedRoom: IRoom
   readonly getAll: () => actions.IGetAll
   readonly create: (newRoom) => any
+  readonly selectRoom: (room) => any
 }
 
 export class RoomList extends React.Component<IPropsFromState>{
@@ -18,32 +20,7 @@ export class RoomList extends React.Component<IPropsFromState>{
   public state = {
     days: [],
     timeSlots: [],
-    selectedDate: '',
-    selectedRoom: {
-      id: 1,
-      location: "A302",
-      floor: 3,
-      size: 6,
-      type: 0,
-      reservations: [
-        {
-          id: 1,
-          reservedBy: "Jesper",
-          roomId: 1,
-          startTime: new Date("2018-11-01T08:00:00"),
-          endTime: new Date("2018-11-01T10:00:00"),
-          length: 2
-        },
-        {
-          id: 2,
-          reservedBy: "Jesper",
-          roomId: 1,
-          startTime: new Date("2018-11-02T12:00:00"),
-          endTime: new Date("2018-11-02T14:00:00"),
-          length: 2
-        }
-      ]
-    }
+    selectedDate: ''
   }
 
   public async componentDidMount() {
@@ -77,9 +54,10 @@ export class RoomList extends React.Component<IPropsFromState>{
   public renderTimeSlotCells = (timeSlot) =>
     this.state.days.map(day => (
       <TimeSlotCell
+        key={format(day)}
         day={day}
         timeSlot={timeSlot}
-        reservations={this.state.selectedRoom.reservations}
+        reservations={this.props.selectedRoom.reservations}
         selectedDate={this.state.selectedDate}
         selectDate={this.selectDate}
       />
@@ -101,13 +79,24 @@ export class RoomList extends React.Component<IPropsFromState>{
     )
   }
 
+  public selectRoom = (room) => {
+    this.props.selectRoom(room);
+  }
+
+  public renderRoomList = () => this.props.rooms.map(room =>
+    <List.Item key={room.id} onClick={() => this.selectRoom(room)}>{room.location}</List.Item>
+  )
+
   public render() {
     const { create } = this.props;
     return (
       <Container>
         <CreateRoom create={create} />
         <Divider />
-        {this.renderTable()}
+        <List>
+          {this.renderRoomList()}
+        </List>
+        {this.props.selectedRoom.id > 0 && this.renderTable()}
       </Container>
     )
   }

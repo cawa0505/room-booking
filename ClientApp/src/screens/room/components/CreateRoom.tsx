@@ -2,7 +2,10 @@ import * as React from 'react';
 import { Form, Button } from 'semantic-ui-react';
 
 interface IState {
-  name: string
+  location: string
+  floor: number
+  size: number
+  type: number
 }
 
 interface IProps {
@@ -12,32 +15,51 @@ interface IProps {
 export class CreateRoom extends React.Component<IProps, IState>{
 
   public state = {
-    name: ''
+    location: '',
+    floor: 0,
+    size: 4,
+    type: 0
   }
 
-  public onChange = ({ target }) => this.setState({ name: target.value });
+  public changeLocation = ({ target }) => this.setState({ location: target.value })
+  public changeFloor = ({ target }) => this.setState({ floor: parseInt(target.value, 10) })
 
   public onSubmit = (event) => {
     event.preventDefault();
     this.props.create({
-      Name: this.state.name
+      location: this.state.location,
+      floor: this.state.floor,
+      size: this.state.size,
+      type: this.state.type
     })
   }
 
   public render() {
 
-    const { name } = this.state;
+    const { location, floor } = this.state;
 
     return (
       <Form onSubmit={this.onSubmit}>
         <Form.Field>
-          <label htmlFor="name">Name of room</label>
-          <input name="name"
+          <label htmlFor="location">Location</label>
+          <input name="location"
             type="text"
             id="name"
-            placeholder="Add new room"
-            onChange={this.onChange}
-            value={name}
+            placeholder="A302"
+            onChange={this.changeLocation}
+            value={location}
+          />
+        </Form.Field>
+        <Form.Field>
+          <label htmlFor="floor">Floor</label>
+          <input name="floor"
+            type="number"
+            id="floor"
+            min="1"
+            max="5"
+            placeholder="3"
+            onChange={this.changeFloor}
+            value={floor}
           />
         </Form.Field>
         <Button type="submit" color="green"> Create Room </Button>

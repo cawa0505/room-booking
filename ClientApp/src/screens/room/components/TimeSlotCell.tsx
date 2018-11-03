@@ -17,8 +17,8 @@ class TimeSlotCell extends React.PureComponent<ITimeSlotProps, {}>{
     const { timeSlot, day } = this.props;
     let reserved = false;
     for (const reservation of this.props.reservations) {
-      const checkDate = (reservation.startTime.getHours() === new Date(timeSlot).getHours())
-        && (new Date(day).getDay() === reservation.startTime.getDay())
+      const checkDate = (new Date(reservation.startTime).getHours() === new Date(timeSlot).getHours())
+        && (new Date(day).getDay() === new Date(reservation.startTime).getDay())
       if (checkDate) {
         reserved = true;
         break;
