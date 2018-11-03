@@ -1,13 +1,22 @@
 import { ActionTypes } from './room.actionTypes';
 import { RoomAction } from './room.actions';
+import { ActionTypes as ReservationActionTypes } from '../reservation/reservation.actionTypes';
+import { ReservationAction } from '../reservation/reservation.actions';
 import { IRoom } from './room.interface';
 
-export function reducer(state: IRoom[] = [], action: RoomAction): IRoom[] {
+type Actions = RoomAction | ReservationAction;
+
+export function reducer(state: IRoom[] = [], action: Actions): IRoom[] {
   switch (action.type) {
     case ActionTypes.GetAll:
       return action.payload;
     case ActionTypes.Create:
       return [...state, action.payload];
+    case ReservationActionTypes.Create:
+      return state.map(room => room.id === action.payload.roomId
+        ? Object.assign({}, room, { reservations: [...room.reservations, action.payload] })
+        : room
+      )
     default:
       return state;
   }
@@ -22,10 +31,12 @@ const initialRoomState: IRoom = {
   reservations: []
 }
 
-export function singleRoomReducer(state: IRoom = initialRoomState, action: RoomAction): IRoom {
+export function singleRoomReducer(state: IRoom = initialRoomState, action: Actions): IRoom {
   switch (action.type) {
     case ActionTypes.SelectRoom:
       return action.payload;
+    case ReservationActionTypes.Create:
+      return Object.assign({}, state, { reservations: [...state.reservations, action.payload] });
     default:
       return state;
   }

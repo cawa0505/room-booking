@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Icon } from 'semantic-ui-react';
 import { format, isEqual } from 'date-fns';
 import { constructDate } from '../../../helpers';
 
@@ -43,11 +43,13 @@ class TimeSlotCell extends React.PureComponent<ITimeSlotProps, {}>{
         key={format(day, 'YYYY-MM-DD')}
         negative={reserved}
         positive={selected}
+        disabled={reserved}
         onClick={this.selectDate}
       >
+        {selected && <Icon name="check" style={{ float: 'right' }} />}
+        {reserved && <Icon name="ban" style={{ float: 'right' }} />}
 
         {format(timeSlot, 'HH:mm')}
-
       </Table.Cell>
     )
   }

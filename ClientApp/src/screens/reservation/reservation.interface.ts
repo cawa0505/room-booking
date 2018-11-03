@@ -1,7 +1,7 @@
 export interface IReservation {
   id: number;
   reservedBy: string;
-  room: number;
+  roomId: number;
   startTime: string;
   endTime: string;
   length: number;

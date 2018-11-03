@@ -21,26 +21,27 @@ export function getAllSuccess(items: IReservation[]): IGetAll {
   }
 }
 
-export function createOneSuccess(item){
+export function createOneSuccess(item) {
   return {
     type: ActionTypes.Create,
     payload: item
   }
 }
 
-export function create(item){
+export function create(item) {
   return async (dispatch) => {
     try {
       const response = await axios.post('/api/reservation', item);
-      dispatch({ type: '[@headers]', payload: response.headers });
-      dispatch(createOneSuccess(item));
-    } catch(error){
+      const [id] = response.headers.location.split('/').slice(-1);
+      const updatedItem = Object.assign({}, item, { id: parseInt(id, 10) });
+      dispatch(createOneSuccess(updatedItem));
+    } catch (error) {
       dispatch({ type: '[@errors]', payload: error });
     }
   }
 }
 
-export function getAll(){
+export function getAll() {
   return async (dispatch) => {
     const { data } = await axios.get('/api/reservation');
     dispatch(getAllSuccess(data));

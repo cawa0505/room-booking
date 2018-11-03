@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Container, Divider, Table, List } from 'semantic-ui-react';
-import { format } from 'date-fns';
+import { Container, Divider, Table, List, Button, Icon } from 'semantic-ui-react';
+import { format, addHours } from 'date-fns';
 import { IRoom } from '../room.interface';
 import * as actions from '../room.actions';
 import CreateRoom from './CreateRoom';
@@ -13,6 +13,7 @@ interface IPropsFromState {
   readonly getAll: () => actions.IGetAll
   readonly create: (newRoom) => any
   readonly selectRoom: (room) => any
+  readonly makeReservation: (date) => any
 }
 
 export class RoomList extends React.Component<IPropsFromState>{
@@ -83,20 +84,39 @@ export class RoomList extends React.Component<IPropsFromState>{
     this.props.selectRoom(room);
   }
 
+  public makeReservation = () => {
+    const startTime = this.state.selectedDate;
+    const endTime = addHours(this.state.selectedDate, 2);
+    const reservation = {
+      reservedBy: 'Jesper',
+      roomId: this.props.selectedRoom.id,
+      startTime,
+      endTime,
+      length: 1
+    }
+    this.props.makeReservation(reservation);
+  }
+
   public renderRoomList = () => this.props.rooms.map(room =>
-    <List.Item key={room.id} onClick={() => this.selectRoom(room)}>{room.location}</List.Item>
+    <List.Item key={room.id} onClick={() => this.selectRoom(room)}>{
+      room.id === this.props.selectedRoom.id
+        ? <List.Header as="h3"> <Icon name="arrow right" /> {room.location}</List.Header>
+        : <List.Header> {room.location}</List.Header>
+    }</List.Item>
   )
 
   public render() {
     const { create } = this.props;
     return (
       <Container>
-        <CreateRoom create={create} />
+        {false && <CreateRoom create={create} />}
         <Divider />
-        <List>
+        <List selection={true}>
           {this.renderRoomList()}
         </List>
+        <Divider />
         {this.props.selectedRoom.id > 0 && this.renderTable()}
+        <Button color="green" onClick={this.makeReservation} > Reserve </Button>
       </Container>
     )
   }
