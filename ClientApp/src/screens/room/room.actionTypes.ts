@@ -1,4 +1,5 @@
-export const enum RoomActionTypes {
+export const enum ActionTypes {
   GetAll = '[@rooms]: GetAll',
-  Create = '[@rooms]: Create'
+  Create = '[@rooms]: Create',
+  SelectRoom = '[@rooms]: SelectRoom'
 }               

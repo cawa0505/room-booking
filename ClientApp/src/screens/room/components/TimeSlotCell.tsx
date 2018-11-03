@@ -3,7 +3,7 @@ import { Table } from 'semantic-ui-react';
 import { format, isEqual } from 'date-fns';
 import { constructDate } from '../../../helpers';
 
-interface ITimeSlotProps{
+interface ITimeSlotProps {
   readonly timeSlot: string;
   readonly day: Date;
   readonly reservations;
@@ -16,10 +16,10 @@ class TimeSlotCell extends React.PureComponent<ITimeSlotProps, {}>{
   public checkIfReserved = () => {
     const { timeSlot, day } = this.props;
     let reserved = false;
-    for(const reservation of this.props.reservations){
+    for (const reservation of this.props.reservations) {
       const checkDate = (reservation.startTime.getHours() === new Date(timeSlot).getHours())
         && (new Date(day).getDay() === reservation.startTime.getDay())
-      if(checkDate){
+      if (checkDate) {
         reserved = true;
         break;
       }

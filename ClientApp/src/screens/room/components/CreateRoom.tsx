@@ -24,7 +24,7 @@ export class CreateRoom extends React.Component<IProps, IState>{
     })
   }
 
-  public render(){
+  public render() {
 
     const { name } = this.state;
 
@@ -32,12 +32,12 @@ export class CreateRoom extends React.Component<IProps, IState>{
       <Form onSubmit={this.onSubmit}>
         <Form.Field>
           <label htmlFor="name">Name of room</label>
-          <input  name="name"
-                  type="text"
-                  id="name"
-                  placeholder="Add new room"
-                  onChange={this.onChange}
-                  value={name}
+          <input name="name"
+            type="text"
+            id="name"
+            placeholder="Add new room"
+            onChange={this.onChange}
+            value={name}
           />
         </Form.Field>
         <Button type="submit" color="green"> Create Room </Button>
