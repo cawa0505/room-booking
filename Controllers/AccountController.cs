@@ -20,7 +20,6 @@ namespace RoomBooking.Controllers
 {
   [Authorize]
   [Route("api/[controller]")]
-  [Produces("application/json")]
   [ApiController]
   public class AccountController : Controller
   {
@@ -58,17 +57,13 @@ namespace RoomBooking.Controllers
 
     [HttpPost("register")]
     [AllowAnonymous]
-    public async Task<IActionResult> Register(RegisterViewModel inUser)
+    public async Task<IActionResult> Register([FromBody] RegisterViewModel inUser)
     {
-      if (ModelState.IsValid)
+      var user = new ApplicationUser { UserName = inUser.Email, Email = inUser.Email };
+      var result = await _userManager.CreateAsync(user, inUser.Password);
+      if (result.Succeeded)
       {
-        var user = new ApplicationUser { UserName = inUser.Email, Email = inUser.Email };
-        var result = await _userManager.CreateAsync(user, inUser.Password);
-        if (result.Succeeded)
-        {
-          return Ok();
-        }
-        return BadRequest();
+        return Ok();
       }
       return BadRequest();
     }
