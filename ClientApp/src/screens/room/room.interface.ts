@@ -4,4 +4,5 @@ export interface IRoom {
   floor: number;
   size: number;
   type: number;
+  reservations: []
 }

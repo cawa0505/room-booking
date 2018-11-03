@@ -1,46 +1,59 @@
-import { RoomActionTypes } from './room.actionTypes';
+import { ActionTypes } from './room.actionTypes';
 import axios from 'axios';
 import { IRoom } from './room.interface';
 
 export interface IGetAll {
-  type: RoomActionTypes.GetAll;
+  type: ActionTypes.GetAll;
   payload: IRoom[]
 }
 
 export interface ICreate {
-  type: RoomActionTypes.Create;
+  type: ActionTypes.Create;
   payload: IRoom
 }
 
-export type RoomAction = IGetAll | ICreate;
+export interface ISelectRoom {
+  type: ActionTypes.SelectRoom;
+  payload: IRoom
+}
+
+export type RoomAction = IGetAll | ICreate | ISelectRoom;
 
 export function getAllSuccess(rooms: IRoom[]): IGetAll {
   return {
-    type: RoomActionTypes.GetAll,
+    type: ActionTypes.GetAll,
     payload: rooms
   }
 }
 
-export function createRoomSuccess(room){
+export function createRoomSuccess(room) {
   return {
-    type: RoomActionTypes.Create,
+    type: ActionTypes.Create,
     payload: room
   }
 }
 
-export function create(room){
+export function selectRoom(room) {
+  return {
+    type: ActionTypes.SelectRoom,
+    payload: room
+  }
+}
+
+export function create(room) {
   return async (dispatch) => {
     try {
       const response = await axios.post('/api/room', room);
-      dispatch({ type: '[@headers]', payload: response.headers });
-      dispatch(createRoomSuccess(room));
-    } catch(error){
+      const [id] = response.headers.location.split('/').slice(-1);
+      const updatedRoom = Object.assign({}, room, { id: parseInt(id, 10), reservations: [] });
+      dispatch(createRoomSuccess(updatedRoom));
+    } catch (error) {
       dispatch({ type: '[@errors]', payload: error });
     }
   }
 }
 
-export function getAll(){
+export function getAll() {
   return async (dispatch) => {
     const { data } = await axios.get('/api/room');
     dispatch(getAllSuccess(data));
