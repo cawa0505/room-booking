@@ -115,8 +115,13 @@ export class RoomList extends React.Component<IPropsFromState>{
           {this.renderRoomList()}
         </List>
         <Divider />
-        {this.props.selectedRoom.id > 0 && this.renderTable()}
-        <Button color="green" onClick={this.makeReservation} > Reserve </Button>
+        {this.props.selectedRoom.id > 0 &&
+          <React.Fragment>
+            {this.renderTable()}
+            <Button color="green" disabled={!this.state.selectedDate} onClick={this.makeReservation} > Reserve </Button>
+          </React.Fragment>
+        }
+
       </Container>
     )
   }
