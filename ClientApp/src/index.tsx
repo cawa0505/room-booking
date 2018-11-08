@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import store from './store/configureStore';
+import store from './store';
 import App from './screens/app/App';
 import 'semantic-ui-css/semantic.min.css';
 import registerServiceWorker from './registerServiceWorker';

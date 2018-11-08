@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Rooms from '../room/room.container';
+import Rooms from '../rooms/rooms.container';
 import Header from './Header';
 
 class App extends React.Component<{}, {}> {

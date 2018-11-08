@@ -1,16 +1,15 @@
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { IRoom } from '../screens/room/room.interface';
-import { IReservation } from '../screens/reservation/reservation.interface';
-import roomsReducer, { singleRoomReducer } from '../screens/room/room.reducer';
-import reservationsReducer from '../screens/reservation/reservation.reducer';
-import menuReducer from './menu/menu.reducer';
-import authReducer from './../screens/auth/auth.reducer';
+import roomsReducer from '../ducks/rooms';
+import reservationsReducer from '../ducks/reservations';
+import singleRoomReducer from '../ducks/selectedRoom';
+import menuReducer from '../ducks/menu';
+import authReducer from '../ducks/auth';
 
 export interface IApplicationState {
-  readonly rooms: IRoom[]
-  readonly reservations: IReservation[]
-  readonly selectedRoom: IRoom
+  readonly rooms
+  readonly reservations
+  readonly selectedRoom
   readonly menu
   readonly auth
 }

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Container, Divider, Table, List, Button, Icon } from 'semantic-ui-react';
 import { format, addHours } from 'date-fns';
-import { IRoom } from '../room.interface';
-import * as actions from '../room.actions';
+import { IRoom } from '../../../ducks/rooms';
+import * as roomActions from '../../../ducks/rooms';
 import CreateRoom from './CreateRoom';
 import { generateDays, generateTimeSlots } from '../../../helpers';
 import TimeSlotCell from './TimeSlotCell';
@@ -11,7 +11,7 @@ interface IPropsFromState {
   readonly rooms: IRoom[]
   readonly selectedRoom: IRoom
   readonly menu: boolean
-  readonly getAll: () => actions.IGetAll
+  readonly getAll: () => roomActions.IGetAll
   readonly create: (newRoom) => any
   readonly selectRoom: (room) => any
   readonly makeReservation: (date) => any

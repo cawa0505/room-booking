@@ -1,14 +1,26 @@
-import { ActionTypes } from './reservation.actionTypes';
 import axios from 'axios';
-import { IReservation } from './reservation.interface';
+
+export interface IReservation {
+  id: number;
+  reservedBy: string;
+  roomId: number;
+  startTime: string;
+  endTime: string;
+  length: number;
+}
+
+export const enum ReservationActionTypes {
+  GetAll = "[@reservation]: GetAll",
+  Create = "[@reservation]: Create"
+}
 
 export interface IGetAll {
-  type: ActionTypes.GetAll;
+  type: ReservationActionTypes.GetAll;
   payload: IReservation[]
 }
 
 export interface ICreate {
-  type: ActionTypes.Create;
+  type: ReservationActionTypes.Create;
   payload: IReservation
 }
 
@@ -16,14 +28,14 @@ export type ReservationAction = IGetAll | ICreate;
 
 export function getAllSuccess(items: IReservation[]): IGetAll {
   return {
-    type: ActionTypes.GetAll,
+    type: ReservationActionTypes.GetAll,
     payload: items
   }
 }
 
 export function createOneSuccess(item) {
   return {
-    type: ActionTypes.Create,
+    type: ReservationActionTypes.Create,
     payload: item
   }
 }
@@ -47,3 +59,16 @@ export function getAll() {
     dispatch(getAllSuccess(data));
   }
 }
+
+export function reducer(state: IReservation[] = [], action: ReservationAction): IReservation[] {
+  switch (action.type) {
+    case ReservationActionTypes.GetAll:
+      return action.payload;
+    case ReservationActionTypes.Create:
+      return [...state, action.payload];
+    default:
+      return state;
+  }
+}
+
+export default reducer;
