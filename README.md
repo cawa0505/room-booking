@@ -29,6 +29,10 @@ mv client-app ClientApp
 yarn add redux react-redux redux-thunk
 ```
 
+##### Using ducks pattern
+
+https://github.com/erikras/ducks-modular-redux
+
 ## Running
 
 ```bash
@@ -57,6 +61,12 @@ Fix:
 ```csproj
 <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" /> 
 <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+```
+
+##### DOTNET_PATH not set
+
+```
+export DOTNET_ROOT=$(dirname $(realpath $(which dotnet)))
 ```
 
 #### Running the migrations

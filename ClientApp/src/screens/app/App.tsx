@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Rooms from '../rooms/rooms.container';
+import Auth from '../auth/auth.container';
 import Header from './Header';
 
 class App extends React.Component<{}, {}> {
@@ -7,6 +8,7 @@ class App extends React.Component<{}, {}> {
     return (
       <React.Fragment>
         <Header />
+        <Auth />
         <Rooms />
       </React.Fragment>
     )

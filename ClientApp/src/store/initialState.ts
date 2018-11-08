@@ -10,11 +10,8 @@ const initalState = {
     reservations: []
   },
   auth: {
-    auth: false,
-    user: {
-      id: 0,
-      username: 'Steffe'
-    }
+    loggedIn: false,
+    user: {}
   },
   menu: false
 }

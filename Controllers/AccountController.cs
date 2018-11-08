@@ -47,7 +47,7 @@ namespace RoomBooking.Controllers
       var result = await _signInManager.PasswordSignInAsync(inUser.Email, inUser.Password, true, false);
       if (result.Succeeded)
       {
-        return Ok();
+        return await GenerateToken(inUser);
       }
       else
       {
@@ -75,8 +75,8 @@ namespace RoomBooking.Controllers
       return Ok();
     }
 
-    [AllowAnonymous]
     [HttpPost("generateToken")]
+    [AllowAnonymous]
     public async Task<IActionResult> GenerateToken([FromBody] LoginViewModel inUser)
     {
       if (ModelState.IsValid)
