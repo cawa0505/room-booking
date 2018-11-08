@@ -10,10 +10,13 @@ import TimeSlotCell from './TimeSlotCell';
 interface IPropsFromState {
   readonly rooms: IRoom[]
   readonly selectedRoom: IRoom
+  readonly menu: boolean
   readonly getAll: () => actions.IGetAll
   readonly create: (newRoom) => any
   readonly selectRoom: (room) => any
   readonly makeReservation: (date) => any
+  readonly showMenu: () => any
+  readonly hideMenu: () => any
 }
 
 export class RoomList extends React.Component<IPropsFromState>{
@@ -109,7 +112,13 @@ export class RoomList extends React.Component<IPropsFromState>{
     const { create } = this.props;
     return (
       <Container>
-        {false && <CreateRoom create={create} />}
+        {
+          this.props.menu
+            ? <Icon name="plus" onClick={this.props.hideMenu} style={{ position: 'absolute', top: 10, left: 10 }} />
+            : <Icon name="fax" onClick={this.props.showMenu} style={{ position: 'absolute', top: 10, left: 10 }} />
+        }
+
+        {this.props.menu && <CreateRoom create={create} />}
         <Divider />
         <List selection={true}>
           {this.renderRoomList()}
