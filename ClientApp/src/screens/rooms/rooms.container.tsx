@@ -5,8 +5,8 @@ import * as menuActions from '../../ducks/menu';
 import * as roomActions from '../../ducks/rooms';
 import * as reservationActions from '../../ducks/reservations';
 
-function mapStateToProps({ rooms, selectedRoom, menu }: IApplicationState) {
-  return { rooms, selectedRoom, menu }
+function mapStateToProps({ rooms, selectedRoom, menu, auth }: IApplicationState) {
+  return { rooms, selectedRoom, menu, auth }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -16,7 +16,8 @@ function mapDispatchToProps(dispatch) {
     getAll: () => dispatch(roomActions.getAll()),
     create: (newRoom) => dispatch(roomActions.create(newRoom)),
     selectRoom: (room) => dispatch(roomActions.selectRoom(room)),
-    makeReservation: (date) => dispatch(reservationActions.create(date))
+    makeReservation: (date) => dispatch(reservationActions.create(date)),
+    deleteReservation: (reservation) => dispatch(reservationActions.deleteOne(reservation))
   }
 }
 

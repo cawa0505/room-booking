@@ -10,7 +10,10 @@ function mapStateToProps({ auth }: IApplicationState) {
 function mapDispatchToProps(dispatch) {
   return {
     login: (authObject) => dispatch(authActions.login(authObject)),
-    register: (authObject) => dispatch(authActions.register(authObject))
+    loginLocal: (email) => dispatch(authActions.loginLocallySuccess(email)),
+    register: (authObject) => dispatch(authActions.register(authObject)),
+    error: () => dispatch({ type: '[@errors]', payload: 'Wrong password' }),
+    logout: () => dispatch(authActions.logoutLocallySuccess())
   }
 }
 

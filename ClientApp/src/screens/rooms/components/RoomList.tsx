@@ -11,12 +11,14 @@ interface IPropsFromState {
   readonly rooms: IRoom[]
   readonly selectedRoom: IRoom
   readonly menu: boolean
+  readonly auth
   readonly getAll: () => roomActions.IGetAll
   readonly create: (newRoom) => any
   readonly selectRoom: (room) => any
   readonly makeReservation: (date) => any
   readonly showMenu: () => any
   readonly hideMenu: () => any
+  readonly deleteReservation: (room) => any
 }
 
 export class RoomList extends React.Component<IPropsFromState>{
@@ -24,7 +26,7 @@ export class RoomList extends React.Component<IPropsFromState>{
   public state = {
     days: [],
     timeSlots: [],
-    selectedDate: ''
+    selectedDate: '',
   }
 
   public async componentDidMount() {
@@ -91,7 +93,7 @@ export class RoomList extends React.Component<IPropsFromState>{
     const startTime = this.state.selectedDate;
     const endTime = addHours(this.state.selectedDate, 2);
     const reservation = {
-      reservedBy: 'Jesper',
+      reservedBy: this.props.auth.user,
       roomId: this.props.selectedRoom.id,
       startTime,
       endTime,
@@ -109,15 +111,28 @@ export class RoomList extends React.Component<IPropsFromState>{
   )
 
   public render() {
-    const { create } = this.props;
+    const { create, auth } = this.props;
+    if (!auth.loggedIn) {
+      return null;
+    }
     return (
       <Container>
         {
           this.props.menu
-            ? <Icon name="plus" onClick={this.props.hideMenu} style={{ position: 'absolute', top: 10, left: 10 }} />
-            : <Icon name="fax" onClick={this.props.showMenu} style={{ position: 'absolute', top: 10, left: 10 }} />
+            ? <Button
+              icon={true}
+              color="blue"
+              content="Close"
+              onClick={this.props.hideMenu}
+              style={{ position: 'absolute', top: 10, left: 10 }}
+            />
+            : <Button
+              color="blue"
+              content="Add Room"
+              onClick={this.props.showMenu}
+              style={{ position: 'absolute', top: 10, left: 10 }}
+            />
         }
-
         {this.props.menu && <CreateRoom create={create} />}
         <Divider />
         <List selection={true}>

@@ -10,8 +10,9 @@ export interface IReservation {
 }
 
 export const enum ReservationActionTypes {
-  GetAll = "[@reservation]: GetAll",
-  Create = "[@reservation]: Create"
+  GetAll = '[@reservation]: get all',
+  Create = '[@reservation]: create',
+  delete = '[@reservation]: delete',
 }
 
 export interface IGetAll {
@@ -40,6 +41,13 @@ export function createOneSuccess(item) {
   }
 }
 
+export function deleteOneSuccess(item) {
+  return {
+    type: ReservationActionTypes.delete,
+    payload: item
+  }
+}
+
 export function create(item) {
   return async (dispatch) => {
     try {
@@ -47,6 +55,17 @@ export function create(item) {
       const [id] = response.headers.location.split('/').slice(-1);
       const updatedItem = Object.assign({}, item, { id: parseInt(id, 10) });
       dispatch(createOneSuccess(updatedItem));
+    } catch (error) {
+      dispatch({ type: '[@errors]', payload: error });
+    }
+  }
+}
+
+export function deleteOne(item) {
+  return async (dispatch) => {
+    try {
+      await axios.delete('/api/reservation', item);
+      dispatch(deleteOneSuccess(item));
     } catch (error) {
       dispatch({ type: '[@errors]', payload: error });
     }

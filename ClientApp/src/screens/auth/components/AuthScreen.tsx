@@ -4,6 +4,10 @@ import { Form, Button, Container } from 'semantic-ui-react';
 interface IAuthScreenProps {
   readonly login
   readonly register
+  readonly loginLocal
+  readonly error
+  readonly auth
+  readonly logout
 }
 
 interface IAuthScreenState {
@@ -21,17 +25,18 @@ export class AuthScreen extends React.Component<IAuthScreenProps, IAuthScreenSta
   public changePassword = ({ target }) => this.setState({ password: target.value })
 
   public onSubmit = (event) => {
-    const { email, password } = this.state;
     event.preventDefault();
-    this.props.login({
-      email,
-      password,
-    })
+    const { email, password } = this.state;
+    if (password === "bunneltan") {
+      this.props.loginLocal(email);
+      sessionStorage.setItem('email', email);
+    } else {
+      this.props.error();
+    }
   }
 
   public register = () => {
     const { email, password } = this.state;
-
     this.props.register({
       email,
       password
@@ -41,7 +46,14 @@ export class AuthScreen extends React.Component<IAuthScreenProps, IAuthScreenSta
   public render() {
 
     const { email, password } = this.state;
-
+    if (this.props.auth.loggedIn) {
+      return <Button
+        style={{ position: 'absolute', top: '1rem', right: '1rem' }}
+        color="red"
+        onClick={this.props.logout}>
+        Logout
+            </Button>
+    }
     return (
       <Container>
         <Form onSubmit={this.onSubmit}>
@@ -62,14 +74,13 @@ export class AuthScreen extends React.Component<IAuthScreenProps, IAuthScreenSta
               id="password"
               min="1"
               max="5"
-              placeholder="3"
+              placeholder="bunneltan"
               onChange={this.changePassword}
               value={password}
             />
           </Form.Field>
           <Button type="submit" color="green"> Login </Button>
         </Form>
-        <Button color="red" onClick={this.register} > Register </Button>
       </Container>
     );
   }

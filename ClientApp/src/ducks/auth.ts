@@ -3,13 +3,28 @@ import initialState from '../store/initialState';
 
 export const enum AuthActionTypes {
   login = '[@auth] login successful',
-  register = '[@auth] register successful'
+  register = '[@auth] register successful',
+  loginLocal = '[@auth] login locally successful',
+  logoutLocal = '[@auth] logout locally successful'
 }
 
 export function loginSuccess(authObject) {
   return {
     type: AuthActionTypes.login,
     payload: authObject
+  }
+}
+
+export function loginLocallySuccess(email) {
+  return {
+    type: AuthActionTypes.loginLocal,
+    payload: email
+  }
+}
+
+export function logoutLocallySuccess() {
+  return {
+    type: AuthActionTypes.logoutLocal
   }
 }
 
@@ -50,6 +65,11 @@ export function storeToken(token) {
 
 export function reducer(state = initialState.auth, action) {
   switch (action.type) {
+    case AuthActionTypes.loginLocal:
+      return { loggedIn: true, user: action.payload };
+    case AuthActionTypes.logoutLocal:
+      sessionStorage.removeItem('email');
+      return initialState.auth;
     default:
       return state;
   }
