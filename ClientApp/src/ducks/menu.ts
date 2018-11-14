@@ -1,26 +1,25 @@
 export const enum MenuActionTypes {
-  showMenu = '[@menu] show menu',
-  hideMenu = '[@menu] hide menu'
+  selectMenuItem = '[@menu] select menu item',
 }
 
-export function showMenu() {
+export const enum Screens {
+  createRoom = 'createRoom',
+  makeReservation = 'makeReservation',
+  login = 'login',
+  yourReservations = 'yourReservations'
+}
+
+export function selectMenuItem(item) {
   return {
-    type: MenuActionTypes.showMenu
+    type: MenuActionTypes.selectMenuItem,
+    payload: item
   }
 }
 
-export function hideMenu() {
-  return {
-    type: MenuActionTypes.hideMenu
-  }
-}
-
-export function reducer(state = false, action) {
+export function reducer(state = Screens.makeReservation, action) {
   switch (action.type) {
-    case MenuActionTypes.showMenu:
-      return true;
-    case MenuActionTypes.hideMenu:
-      return false;
+    case MenuActionTypes.selectMenuItem:
+      return action.payload;
     default:
       return state;
   }

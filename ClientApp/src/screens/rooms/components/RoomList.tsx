@@ -1,23 +1,18 @@
 import * as React from 'react';
-import { Container, Divider, Table, List, Button, Icon } from 'semantic-ui-react';
+import { Divider, Table, List, Button, Icon } from 'semantic-ui-react';
 import { format, addHours } from 'date-fns';
 import { IRoom } from '../../../ducks/rooms';
 import * as roomActions from '../../../ducks/rooms';
-import CreateRoom from './CreateRoom';
 import { generateDays, generateTimeSlots } from '../../../helpers';
 import TimeSlotCell from './TimeSlotCell';
 
 interface IPropsFromState {
   readonly rooms: IRoom[]
   readonly selectedRoom: IRoom
-  readonly menu: boolean
   readonly auth
   readonly getAll: () => roomActions.IGetAll
-  readonly create: (newRoom) => any
   readonly selectRoom: (room) => any
   readonly makeReservation: (date) => any
-  readonly showMenu: () => any
-  readonly hideMenu: () => any
   readonly deleteReservation: (room) => any
 }
 
@@ -111,30 +106,12 @@ export class RoomList extends React.Component<IPropsFromState>{
   )
 
   public render() {
-    const { create, auth } = this.props;
+    const { auth } = this.props;
     if (!auth.loggedIn) {
       return null;
     }
     return (
-      <Container>
-        {
-          this.props.menu
-            ? <Button
-              icon={true}
-              color="blue"
-              content="Close"
-              onClick={this.props.hideMenu}
-              style={{ position: 'absolute', top: 10, left: 10 }}
-            />
-            : <Button
-              color="blue"
-              content="Add Room"
-              onClick={this.props.showMenu}
-              style={{ position: 'absolute', top: 10, left: 10 }}
-            />
-        }
-        {this.props.menu && <CreateRoom create={create} />}
-        <Divider />
+      <React.Fragment>
         <List selection={true}>
           {this.renderRoomList()}
         </List>
@@ -146,7 +123,7 @@ export class RoomList extends React.Component<IPropsFromState>{
           </React.Fragment>
         }
 
-      </Container>
+      </React.Fragment>
     )
   }
 }

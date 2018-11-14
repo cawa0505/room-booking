@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form, Button, Container } from 'semantic-ui-react';
+import { Form, Button } from 'semantic-ui-react';
 
 interface IAuthScreenProps {
   readonly login
@@ -46,42 +46,32 @@ export class AuthScreen extends React.Component<IAuthScreenProps, IAuthScreenSta
   public render() {
 
     const { email, password } = this.state;
-    if (this.props.auth.loggedIn) {
-      return <Button
-        style={{ position: 'absolute', top: '1rem', right: '1rem' }}
-        color="red"
-        onClick={this.props.logout}>
-        Logout
-            </Button>
-    }
     return (
-      <Container>
-        <Form onSubmit={this.onSubmit}>
-          <Form.Field>
-            <label htmlFor="email">Email</label>
-            <input name="email"
-              type="email"
-              id="email"
-              placeholder="test@test.se"
-              onChange={this.changeEmail}
-              value={email}
-            />
-          </Form.Field>
-          <Form.Field>
-            <label htmlFor="password">Password</label>
-            <input name="password"
-              type="password"
-              id="password"
-              min="1"
-              max="5"
-              placeholder="bunneltan"
-              onChange={this.changePassword}
-              value={password}
-            />
-          </Form.Field>
-          <Button type="submit" color="green"> Login </Button>
-        </Form>
-      </Container>
+      <Form onSubmit={this.onSubmit}>
+        <Form.Field>
+          <label htmlFor="email">Email</label>
+          <input name="email"
+            type="email"
+            id="email"
+            placeholder="test@test.se"
+            onChange={this.changeEmail}
+            value={email}
+          />
+        </Form.Field>
+        <Form.Field>
+          <label htmlFor="password">Password</label>
+          <input name="password"
+            type="password"
+            id="password"
+            min="1"
+            max="5"
+            placeholder="bunneltan"
+            onChange={this.changePassword}
+            value={password}
+          />
+        </Form.Field>
+        <Button type="submit" color="green"> Login </Button>
+      </Form>
     );
   }
 }
