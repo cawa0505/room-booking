@@ -85,8 +85,8 @@ export class RoomList extends React.Component<IPropsFromState>{
   }
 
   public makeReservation = () => {
-    const startTime = this.state.selectedDate;
-    const endTime = addHours(this.state.selectedDate, 2);
+    const startTime = format(this.state.selectedDate);
+    const endTime = format(addHours(this.state.selectedDate, 1));
     const reservation = {
       reservedBy: this.props.auth.user,
       roomId: this.props.selectedRoom.id,

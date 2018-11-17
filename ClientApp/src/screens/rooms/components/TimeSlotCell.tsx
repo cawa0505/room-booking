@@ -41,9 +41,9 @@ class TimeSlotCell extends React.PureComponent<ITimeSlotProps, {}>{
         style={{ padding: '.5em .7em', cursor: 'pointer' }}
         selectable={!reserved}
         key={format(day, 'YYYY-MM-DD')}
-        negative={reserved}
+        negative={reserved !== null}
         positive={selected}
-        disabled={reserved}
+        disabled={reserved !== null}
         onClick={this.selectDate}
       >
         {selected && <Icon name="check" style={{ float: 'right' }} />}
