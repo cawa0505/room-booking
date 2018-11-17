@@ -29,6 +29,10 @@ mv client-app ClientApp
 yarn add redux react-redux redux-thunk
 ```
 
+##### Using ducks pattern
+
+https://github.com/erikras/ducks-modular-redux
+
 ## Running
 
 ```bash
@@ -57,6 +61,12 @@ Fix:
 ```csproj
 <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" /> 
 <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+```
+
+##### DOTNET_PATH not set
+
+```
+export DOTNET_ROOT=$(dirname $(realpath $(which dotnet)))
 ```
 
 #### Running the migrations
@@ -93,3 +103,4 @@ yarn test
 * https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/existing-db?view=aspnetcore-2.0
 * https://docs.microsoft.com/en-us/ef/core/querying/related-data?view=aspnetcore-2.0
 * https://stackoverflow.com/questions/39107228/entity-framework-core-does-not-contain-a-definition-for-include/39107344
+https://stackoverflow.com/a/39434947/5836872

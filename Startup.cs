@@ -34,7 +34,8 @@ namespace RoomBooking
           .AddDbContext<RoomBookingContext>(options => options.UseSqlite(connection));
       services
           .AddMvc()
-          .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+          .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+          .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
       services.AddSpaStaticFiles(configuration =>
       {

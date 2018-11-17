@@ -15,12 +15,12 @@ class TimeSlotCell extends React.PureComponent<ITimeSlotProps, {}>{
 
   public checkIfReserved = () => {
     const { timeSlot, day } = this.props;
-    let reserved = false;
+    let reserved = null;
     for (const reservation of this.props.reservations) {
       const checkDate = (new Date(reservation.startTime).getHours() === new Date(timeSlot).getHours())
         && (new Date(day).getDay() === new Date(reservation.startTime).getDay())
       if (checkDate) {
-        reserved = true;
+        reserved = reservation;
         break;
       }
     }
@@ -41,13 +41,16 @@ class TimeSlotCell extends React.PureComponent<ITimeSlotProps, {}>{
         style={{ padding: '.5em .7em', cursor: 'pointer' }}
         selectable={!reserved}
         key={format(day, 'YYYY-MM-DD')}
-        negative={reserved}
+        negative={reserved !== null}
         positive={selected}
-        disabled={reserved}
+        disabled={reserved !== null}
         onClick={this.selectDate}
       >
         {selected && <Icon name="check" style={{ float: 'right' }} />}
-        {reserved && <Icon name="ban" style={{ float: 'right' }} />}
+        {reserved &&
+
+          <Icon name="ban" style={{ float: 'right' }} />
+        }
 
         {format(timeSlot, 'HH:mm')}
       </Table.Cell>

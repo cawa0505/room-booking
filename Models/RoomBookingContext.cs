@@ -24,14 +24,16 @@ namespace RoomBooking.Models
       modelBuilder.Entity<Reservation>(entity =>
       {
         entity
-                  .Property(e => e.RoomId)
-                  .IsRequired();
+          .HasOne(r => r.Room)
+          .WithMany(res => res.Reservations)
+          .HasForeignKey(r => r.RoomId);
       });
 
       modelBuilder.Entity<Room>(entity =>
       {
         entity
-                  .HasMany(d => d.Reservations);
+          .HasMany(d => d.Reservations)
+          .WithOne(r => r.Room);
       });
     }
   }

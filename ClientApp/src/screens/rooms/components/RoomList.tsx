@@ -1,19 +1,19 @@
 import * as React from 'react';
-import { Container, Divider, Table, List, Button, Icon } from 'semantic-ui-react';
+import { Divider, Table, List, Button, Icon } from 'semantic-ui-react';
 import { format, addHours } from 'date-fns';
-import { IRoom } from '../room.interface';
-import * as actions from '../room.actions';
-import CreateRoom from './CreateRoom';
+import { IRoom } from '../../../ducks/rooms';
+import * as roomActions from '../../../ducks/rooms';
 import { generateDays, generateTimeSlots } from '../../../helpers';
 import TimeSlotCell from './TimeSlotCell';
 
 interface IPropsFromState {
   readonly rooms: IRoom[]
   readonly selectedRoom: IRoom
-  readonly getAll: () => actions.IGetAll
-  readonly create: (newRoom) => any
+  readonly auth
+  readonly getAll: () => roomActions.IGetAll
   readonly selectRoom: (room) => any
   readonly makeReservation: (date) => any
+  readonly deleteReservation: (room) => any
 }
 
 export class RoomList extends React.Component<IPropsFromState>{
@@ -21,7 +21,7 @@ export class RoomList extends React.Component<IPropsFromState>{
   public state = {
     days: [],
     timeSlots: [],
-    selectedDate: ''
+    selectedDate: '',
   }
 
   public async componentDidMount() {
@@ -85,10 +85,10 @@ export class RoomList extends React.Component<IPropsFromState>{
   }
 
   public makeReservation = () => {
-    const startTime = this.state.selectedDate;
-    const endTime = addHours(this.state.selectedDate, 2);
+    const startTime = format(this.state.selectedDate);
+    const endTime = format(addHours(this.state.selectedDate, 1));
     const reservation = {
-      reservedBy: 'Jesper',
+      reservedBy: this.props.auth.user,
       roomId: this.props.selectedRoom.id,
       startTime,
       endTime,
@@ -106,11 +106,12 @@ export class RoomList extends React.Component<IPropsFromState>{
   )
 
   public render() {
-    const { create } = this.props;
+    const { auth } = this.props;
+    if (!auth.loggedIn) {
+      return null;
+    }
     return (
-      <Container>
-        {false && <CreateRoom create={create} />}
-        <Divider />
+      <React.Fragment>
         <List selection={true}>
           {this.renderRoomList()}
         </List>
@@ -122,7 +123,7 @@ export class RoomList extends React.Component<IPropsFromState>{
           </React.Fragment>
         }
 
-      </Container>
+      </React.Fragment>
     )
   }
 }
