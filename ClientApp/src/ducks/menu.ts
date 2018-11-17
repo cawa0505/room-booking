@@ -19,6 +19,8 @@ export function selectMenuItem(item) {
 export function reducer(state = Screens.makeReservation, action) {
   switch (action.type) {
     case MenuActionTypes.selectMenuItem:
+      // TODO: Move outside of reducer
+      sessionStorage.setItem('previousSelectedMenu', action.payload);
       return action.payload;
     default:
       return state;

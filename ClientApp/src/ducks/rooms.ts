@@ -74,7 +74,7 @@ export function getAll() {
   }
 }
 
-export function reducer(state: IRoom[] = [], action): IRoom[] {
+export function reducer(state = [], action) {
   switch (action.type) {
     case RoomActionTypes.GetAll:
       return action.payload;
@@ -85,6 +85,8 @@ export function reducer(state: IRoom[] = [], action): IRoom[] {
         ? Object.assign({}, room, { reservations: [...room.reservations, action.payload] })
         : room
       )
+    case ReservationActionTypes.deleteOne:
+      return state.map(room => room.id === action.payload.roomId ? room.reservations.filter(r => r.id !== action.payload.id) : room);
     default:
       return state;
   }

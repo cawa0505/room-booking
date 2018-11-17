@@ -68,6 +68,7 @@ export function reducer(state = initialState.auth, action) {
     case AuthActionTypes.loginLocal:
       return { loggedIn: true, user: action.payload };
     case AuthActionTypes.logoutLocal:
+      // TODO: move outside of reducer
       sessionStorage.removeItem('email');
       return initialState.auth;
     default:

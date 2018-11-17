@@ -9,7 +9,8 @@ function mapStateToProps({ reservations }: IApplicationState) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getAll: () => dispatch(reservationActions.getAll())
+    getAll: () => dispatch(reservationActions.getAll()),
+    deleteOne: (item) => dispatch(reservationActions.deleteOne(item))
   }
 }
 

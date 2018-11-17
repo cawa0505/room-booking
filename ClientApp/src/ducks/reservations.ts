@@ -11,8 +11,9 @@ export interface IReservation {
 
 export const enum ReservationActionTypes {
   GetAll = '[@reservation]: get all',
+  getOne = '[@reservation]: get one',
   Create = '[@reservation]: create',
-  delete = '[@reservation]: delete',
+  deleteOne = '[@reservation]: delete',
 }
 
 export interface IGetAll {
@@ -34,6 +35,13 @@ export function getAllSuccess(items: IReservation[]): IGetAll {
   }
 }
 
+export function getOneSuccess(item) {
+  return {
+    type: ReservationActionTypes.GetAll,
+    payload: item
+  }
+}
+
 export function createOneSuccess(item) {
   return {
     type: ReservationActionTypes.Create,
@@ -43,7 +51,7 @@ export function createOneSuccess(item) {
 
 export function deleteOneSuccess(item) {
   return {
-    type: ReservationActionTypes.delete,
+    type: ReservationActionTypes.deleteOne,
     payload: item
   }
 }
@@ -53,8 +61,8 @@ export function create(item) {
     try {
       const response = await axios.post('/api/reservation', item);
       const [id] = response.headers.location.split('/').slice(-1);
-      const updatedItem = Object.assign({}, item, { id: parseInt(id, 10) });
-      dispatch(createOneSuccess(updatedItem));
+      const { data } = await axios.get(`/api/reservation/${id}`);
+      dispatch(createOneSuccess(data));
     } catch (error) {
       dispatch({ type: '[@errors]', payload: error });
     }
@@ -63,12 +71,9 @@ export function create(item) {
 
 export function deleteOne(item) {
   return async (dispatch) => {
-    try {
-      await axios.delete('/api/reservation', item);
-      dispatch(deleteOneSuccess(item));
-    } catch (error) {
-      dispatch({ type: '[@errors]', payload: error });
-    }
+    const result = await axios.delete(`/api/reservation/${item.id}`);
+    dispatch({ type: '[@errors]', payload: result });
+    dispatch(deleteOneSuccess(item));
   }
 }
 
@@ -79,12 +84,22 @@ export function getAll() {
   }
 }
 
-export function reducer(state: IReservation[] = [], action: ReservationAction): IReservation[] {
+export function getOne(id) {
+  return async (dispatch) => {
+    const { data } = await axios.get(`/api/reservation/${id}`);
+    dispatch(getOneSuccess(data));
+  }
+}
+
+export function reducer(state: IReservation[] = [], action): IReservation[] {
   switch (action.type) {
     case ReservationActionTypes.GetAll:
       return action.payload;
     case ReservationActionTypes.Create:
+    case ReservationActionTypes.getOne:
       return [...state, action.payload];
+    case ReservationActionTypes.deleteOne:
+      return state.filter(reservation => reservation.id !== action.payload.id);
     default:
       return state;
   }
