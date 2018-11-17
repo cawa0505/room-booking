@@ -37,6 +37,7 @@ namespace RoomBooking.Controllers
       {
         return NotFound();
       }
+      _context.Entry(item).Reference("Room").Load();
       return item;
     }
 
