@@ -103,3 +103,4 @@ yarn test
 * https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/existing-db?view=aspnetcore-2.0
 * https://docs.microsoft.com/en-us/ef/core/querying/related-data?view=aspnetcore-2.0
 * https://stackoverflow.com/questions/39107228/entity-framework-core-does-not-contain-a-definition-for-include/39107344
+https://stackoverflow.com/a/39434947/5836872
