@@ -11,6 +11,11 @@ if (user) {
   store.dispatch({ type: '[@auth] login locally successful', payload: user });
 }
 
+const menu = sessionStorage.getItem('previousSelectedMenu');
+if (menu) {
+  store.dispatch({ type: '[@menu] select menu item', payload: menu });
+}
+
 const mountPoint = document.getElementById('root') as HTMLElement;
 
 ReactDOM.render(
