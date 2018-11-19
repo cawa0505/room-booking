@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Dropdown } from 'semantic-ui-react';
 
 interface IState {
   location: string
@@ -55,20 +55,22 @@ export class CreateRoom extends React.Component<IProps, IState>{
 
   public render() {
 
-    const { location, roomType, floor, size } = this.state;
+    const { location, size } = this.state;
 
     return (
       <Form onSubmit={this.onSubmit}>
-        <Form.Input
-          required={true}
-          label="Location/name"
-          name="location"
-          onChange={this.changeLocation}
-          valeu={location}
-          placeholder="Location or name"
-        />
-        <Form.Group widths='equal'>
+        <Form.Group>
           <Form.Input
+            width={12}
+            required={true}
+            label="Location/name"
+            name="location"
+            onChange={this.changeLocation}
+            valeu={location}
+            placeholder="Location or name"
+          />
+          <Form.Input
+            width={4}
             required={true}
             label="Size"
             name="size"
@@ -79,23 +81,27 @@ export class CreateRoom extends React.Component<IProps, IState>{
             value={size}
             placeholder="Size"
           />
-          <Form.Select
+        </Form.Group>
+        <Form.Group>
+          <Dropdown
+            style={{ margin: '0 .5rem' }}
             required={true}
+            selection={true}
+            fluid={true}
+            name='floor'
             options={floorOptions}
-            label="Floor"
-            name="Floor"
+            placeholder='Choose a floor'
             onChange={this.changeFloor}
-            value={floor}
-            placeholder="Choose a floor"
           />
-          <Form.Select
+          <Dropdown
+            style={{ margin: '0 .5rem' }}
             required={true}
+            selection={true}
+            fluid={true}
+            name='room'
             options={roomTypeOptions}
-            label="Room type"
-            name="Room type"
+            placeholder='Choose a room type'
             onChange={this.changeRoomType}
-            value={roomType}
-            placeholder="Choose a room type"
           />
         </Form.Group>
         <Button type="submit" color="green"> Create Room </Button>

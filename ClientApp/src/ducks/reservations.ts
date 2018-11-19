@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { IRoom } from './rooms';
 
 export interface IReservation {
   id: number;
@@ -7,49 +8,46 @@ export interface IReservation {
   startTime: string;
   endTime: string;
   length: number;
+  room: IRoom
 }
 
 export const enum ReservationActionTypes {
-  GetAll = '[@reservation]: get all',
+  getAll = '[@reservation]: get all',
   getOne = '[@reservation]: get one',
-  Create = '[@reservation]: create',
+  create = '[@reservation]: create',
   deleteOne = '[@reservation]: delete',
 }
 
-export interface IGetAll {
-  type: ReservationActionTypes.GetAll;
-  payload: IReservation[]
+interface IReservationAction {
+  type: ReservationActionTypes.getAll
+  | ReservationActionTypes.getOne
+  | ReservationActionTypes.create
+  | ReservationActionTypes.deleteOne
+  payload: IReservation[] | IReservation
 }
 
-export interface ICreate {
-  type: ReservationActionTypes.Create;
-  payload: IReservation
-}
-
-export type ReservationAction = IGetAll | ICreate;
-
-export function getAllSuccess(items: IReservation[]): IGetAll {
+export function getAllSuccess(items: IReservation[]): IReservationAction {
   return {
-    type: ReservationActionTypes.GetAll,
+    type: ReservationActionTypes.getAll,
     payload: items
   }
 }
 
-export function getOneSuccess(item) {
+export function getOneSuccess(item: IReservation): IReservationAction {
   return {
-    type: ReservationActionTypes.GetAll,
+    type: ReservationActionTypes.getAll,
     payload: item
   }
 }
 
-export function createOneSuccess(item) {
+export function createOneSuccess(item: IReservation): IReservationAction {
   return {
-    type: ReservationActionTypes.Create,
+    type: ReservationActionTypes.create,
     payload: item
   }
 }
 
-export function deleteOneSuccess(item) {
+export function deleteOneSuccess(item: IReservation): IReservationAction {
   return {
     type: ReservationActionTypes.deleteOne,
     payload: item
@@ -93,9 +91,9 @@ export function getOne(id) {
 
 export function reducer(state: IReservation[] = [], action): IReservation[] {
   switch (action.type) {
-    case ReservationActionTypes.GetAll:
+    case ReservationActionTypes.getAll:
       return action.payload;
-    case ReservationActionTypes.Create:
+    case ReservationActionTypes.create:
     case ReservationActionTypes.getOne:
       return [...state, action.payload];
     case ReservationActionTypes.deleteOne:

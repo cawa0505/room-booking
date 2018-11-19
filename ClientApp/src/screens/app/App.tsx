@@ -6,17 +6,17 @@ import Auth from '../auth/auth.container';
 import Menu from './Menu';
 import Header from './Header';
 import * as menuActions from '../../ducks/menu';
-import { logoutLocallySuccess } from '../../ducks/auth';
+import { logoutLocallySuccess, IAuth } from '../../ducks/auth';
 import { CreateRoom } from '../rooms/components/CreateRoom';
 import { create } from '../../ducks/rooms';
 import Reservations from '../reservations/reservations.container';
 
 interface IAppProps {
-  auth
-  menu
-  selectMenuItem
-  logout
-  createRoom
+  readonly auth: IAuth
+  readonly menu;
+  readonly selectMenuItem: (menu) => void
+  readonly logout: () => void
+  readonly createRoom: (room) => void
 }
 
 class App extends React.Component<IAppProps, {}> {
@@ -26,10 +26,10 @@ class App extends React.Component<IAppProps, {}> {
       <React.Fragment>
         <Header />
         <Grid container={true} columns={2} stackable={true}>
-          <Grid.Column width={4}>
-            <Menu logout={this.props.logout} selectMenuItem={this.props.selectMenuItem} />
+          <Grid.Column computer={4} mobile={16} tablet={16} style={{ display: 'flex', justifyContent: 'center' }}>
+            <Menu auth={this.props.auth} logout={this.props.logout} selectMenuItem={this.props.selectMenuItem} />
           </Grid.Column>
-          <Grid.Column width={12}>
+          <Grid.Column computer={12} mobile={16} tablet={16}>
             {
               this.props.auth.loggedIn
                 ? this.props.menu === menuActions.Screens.makeReservation

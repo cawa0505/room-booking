@@ -1,6 +1,11 @@
 import axios from 'axios';
 import initialState from '../store/initialState';
 
+export interface IAuth {
+  loggedIn: boolean;
+  user: string;
+}
+
 export const enum AuthActionTypes {
   login = '[@auth] login successful',
   register = '[@auth] register successful',
@@ -8,27 +13,36 @@ export const enum AuthActionTypes {
   logoutLocal = '[@auth] logout locally successful'
 }
 
-export function loginSuccess(authObject) {
+export interface IAuthAction {
+  type: AuthActionTypes.login
+  | AuthActionTypes.loginLocal
+  | AuthActionTypes.register
+  | AuthActionTypes.logoutLocal,
+  payload: IAuth | string
+}
+
+export function loginSuccess(authObject): IAuthAction {
   return {
     type: AuthActionTypes.login,
     payload: authObject
   }
 }
 
-export function loginLocallySuccess(email) {
+export function loginLocallySuccess(email: string): IAuthAction {
   return {
     type: AuthActionTypes.loginLocal,
     payload: email
   }
 }
 
-export function logoutLocallySuccess() {
+export function logoutLocallySuccess(): IAuthAction {
   return {
-    type: AuthActionTypes.logoutLocal
+    type: AuthActionTypes.logoutLocal,
+    payload: ''
   }
 }
 
-export function registerSuccess(user) {
+export function registerSuccess(user: string): IAuthAction {
   return {
     type: AuthActionTypes.register,
     payload: user
@@ -59,11 +73,11 @@ export function register(authObject) {
   }
 }
 
-export function storeToken(token) {
+export function storeToken(token: string): void {
   sessionStorage.setItem('jwtToken', token);
 }
 
-export function reducer(state = initialState.auth, action) {
+export function reducer(state: IAuth = initialState.auth, action): IAuth {
   switch (action.type) {
     case AuthActionTypes.loginLocal:
       return { loggedIn: true, user: action.payload };

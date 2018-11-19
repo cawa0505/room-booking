@@ -11,9 +11,9 @@ const initalState = {
   },
   auth: {
     loggedIn: false,
-    user: {}
+    user: ''
   },
-  menu: false
+  menu: 'login'
 }
 
 export default initalState;
