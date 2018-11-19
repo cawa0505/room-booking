@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { Divider, Table, List, Button, Icon } from 'semantic-ui-react';
+import { Divider, Table, Button, Dropdown } from 'semantic-ui-react';
 import { format, addHours } from 'date-fns';
 import { IRoom } from '../../../ducks/rooms';
-import * as roomActions from '../../../ducks/rooms';
 import { generateDays, generateTimeSlots } from '../../../helpers';
 import TimeSlotCell from './TimeSlotCell';
+import initialState from '../../../store/initialState';
 
 interface IPropsFromState {
   readonly rooms: IRoom[]
   readonly selectedRoom: IRoom
   readonly auth
-  readonly getAll: () => roomActions.IGetAll
+  readonly getAll: () => any
   readonly selectRoom: (room) => any
   readonly makeReservation: (date) => any
   readonly deleteReservation: (room) => any
@@ -30,6 +30,10 @@ export class RoomList extends React.Component<IPropsFromState>{
       timeSlots: generateTimeSlots(),
       days: generateDays()
     });
+  }
+
+  public componentWillUnmount() {
+    this.props.selectRoom(initialState.selectedRoom);
   }
 
   public selectDate = (date) => {
@@ -80,7 +84,8 @@ export class RoomList extends React.Component<IPropsFromState>{
     )
   }
 
-  public selectRoom = (room) => {
+  public selectRoom = (e, { value }) => {
+    const room = this.props.rooms.find(item => item.id === value);
     this.props.selectRoom(room);
   }
 
@@ -97,13 +102,16 @@ export class RoomList extends React.Component<IPropsFromState>{
     this.props.makeReservation(reservation);
   }
 
-  public renderRoomList = () => this.props.rooms.map(room =>
-    <List.Item key={room.id} onClick={() => this.selectRoom(room)}>{
-      room.id === this.props.selectedRoom.id
-        ? <List.Header as="h3"> <Icon name="arrow right" /> {room.location}</List.Header>
-        : <List.Header> {room.location}</List.Header>
-    }</List.Item>
-  )
+  public renderRoomList = () => {
+    const options = this.props.rooms.map(room => ({ text: room.location, value: room.id }))
+    return <Dropdown
+      selection={true}
+      name='location'
+      options={options}
+      placeholder='Choose a room'
+      onChange={this.selectRoom}
+    />
+  }
 
   public render() {
     const { auth } = this.props;
@@ -112,9 +120,7 @@ export class RoomList extends React.Component<IPropsFromState>{
     }
     return (
       <React.Fragment>
-        <List selection={true}>
-          {this.renderRoomList()}
-        </List>
+        {this.renderRoomList()}
         <Divider />
         {this.props.selectedRoom.id > 0 &&
           <React.Fragment>

@@ -10,41 +10,41 @@ export interface IReservation {
 }
 
 export const enum ReservationActionTypes {
-  GetAll = '[@reservation]: get all',
+  getAll = '[@reservation]: get all',
   getOne = '[@reservation]: get one',
-  Create = '[@reservation]: create',
+  create = '[@reservation]: create',
   deleteOne = '[@reservation]: delete',
 }
 
-export interface IGetAll {
-  type: ReservationActionTypes.GetAll;
+export interface IgetAll {
+  type: ReservationActionTypes.getAll;
   payload: IReservation[]
 }
 
 export interface ICreate {
-  type: ReservationActionTypes.Create;
+  type: ReservationActionTypes.create;
   payload: IReservation
 }
 
-export type ReservationAction = IGetAll | ICreate;
+export type ReservationAction = IgetAll | ICreate;
 
-export function getAllSuccess(items: IReservation[]): IGetAll {
+export function getAllSuccess(items: IReservation[]): IgetAll {
   return {
-    type: ReservationActionTypes.GetAll,
+    type: ReservationActionTypes.getAll,
     payload: items
   }
 }
 
 export function getOneSuccess(item) {
   return {
-    type: ReservationActionTypes.GetAll,
+    type: ReservationActionTypes.getAll,
     payload: item
   }
 }
 
 export function createOneSuccess(item) {
   return {
-    type: ReservationActionTypes.Create,
+    type: ReservationActionTypes.create,
     payload: item
   }
 }
@@ -93,9 +93,9 @@ export function getOne(id) {
 
 export function reducer(state: IReservation[] = [], action): IReservation[] {
   switch (action.type) {
-    case ReservationActionTypes.GetAll:
+    case ReservationActionTypes.getAll:
       return action.payload;
-    case ReservationActionTypes.Create:
+    case ReservationActionTypes.create:
     case ReservationActionTypes.getOne:
       return [...state, action.payload];
     case ReservationActionTypes.deleteOne:

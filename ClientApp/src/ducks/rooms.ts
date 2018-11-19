@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ReservationActionTypes } from './reservations';
+import { ReservationActionTypes, IReservation } from './reservations';
 
 export interface IRoom {
   id: number;
@@ -7,23 +7,13 @@ export interface IRoom {
   floor: number;
   size: number;
   type: number;
-  reservations: []
+  reservations: IReservation[]
 }
 
 export const enum RoomActionTypes {
-  GetAll = '[@rooms]: GetAll',
-  Create = '[@rooms]: Create',
+  getAll = '[@rooms]: getAll',
+  create = '[@rooms]: create',
   SelectRoom = '[@rooms]: SelectRoom'
-}
-
-export interface IGetAll {
-  type: RoomActionTypes.GetAll;
-  payload: IRoom[]
-}
-
-export interface ICreate {
-  type: RoomActionTypes.Create;
-  payload: IRoom
 }
 
 export interface ISelectRoom {
@@ -31,18 +21,16 @@ export interface ISelectRoom {
   payload: IRoom
 }
 
-export type RoomAction = IGetAll | ICreate | ISelectRoom;
-
-export function getAllSuccess(rooms: IRoom[]): IGetAll {
+export function getAllSuccess(rooms: IRoom[]) {
   return {
-    type: RoomActionTypes.GetAll,
+    type: RoomActionTypes.getAll,
     payload: rooms
   }
 }
 
-export function createRoomSuccess(room) {
+export function createRoomSuccess(room: IRoom) {
   return {
-    type: RoomActionTypes.Create,
+    type: RoomActionTypes.create,
     payload: room
   }
 }
@@ -76,11 +64,11 @@ export function getAll() {
 
 export function reducer(state = [], action) {
   switch (action.type) {
-    case RoomActionTypes.GetAll:
+    case RoomActionTypes.getAll:
       return action.payload;
-    case RoomActionTypes.Create:
+    case RoomActionTypes.create:
       return [...state, action.payload];
-    case ReservationActionTypes.Create:
+    case ReservationActionTypes.create:
       return state.map(room => room.id === action.payload.roomId
         ? Object.assign({}, room, { reservations: [...room.reservations, action.payload] })
         : room
