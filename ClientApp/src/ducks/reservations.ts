@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { IRoom } from './rooms';
 
 export interface IReservation {
   id: number;
@@ -7,6 +8,7 @@ export interface IReservation {
   startTime: string;
   endTime: string;
   length: number;
+  room: IRoom
 }
 
 export const enum ReservationActionTypes {
@@ -16,40 +18,36 @@ export const enum ReservationActionTypes {
   deleteOne = '[@reservation]: delete',
 }
 
-export interface IgetAll {
-  type: ReservationActionTypes.getAll;
-  payload: IReservation[]
+interface IReservationAction {
+  type: ReservationActionTypes.getAll
+  | ReservationActionTypes.getOne
+  | ReservationActionTypes.create
+  | ReservationActionTypes.deleteOne
+  payload: IReservation[] | IReservation
 }
 
-export interface ICreate {
-  type: ReservationActionTypes.create;
-  payload: IReservation
-}
-
-export type ReservationAction = IgetAll | ICreate;
-
-export function getAllSuccess(items: IReservation[]): IgetAll {
+export function getAllSuccess(items: IReservation[]): IReservationAction {
   return {
     type: ReservationActionTypes.getAll,
     payload: items
   }
 }
 
-export function getOneSuccess(item) {
+export function getOneSuccess(item: IReservation): IReservationAction {
   return {
     type: ReservationActionTypes.getAll,
     payload: item
   }
 }
 
-export function createOneSuccess(item) {
+export function createOneSuccess(item: IReservation): IReservationAction {
   return {
     type: ReservationActionTypes.create,
     payload: item
   }
 }
 
-export function deleteOneSuccess(item) {
+export function deleteOneSuccess(item: IReservation): IReservationAction {
   return {
     type: ReservationActionTypes.deleteOne,
     payload: item

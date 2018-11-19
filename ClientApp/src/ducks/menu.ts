@@ -9,14 +9,21 @@ export const enum Screens {
   yourReservations = 'yourReservations'
 }
 
-export function selectMenuItem(item) {
+type MenuSelect = Screens.createRoom | Screens.makeReservation | Screens.login | Screens.yourReservations;
+
+export interface IMenuAction {
+  type: MenuActionTypes.selectMenuItem,
+  payload: MenuSelect
+}
+
+export function selectMenuItem(item: MenuSelect): IMenuAction {
   return {
     type: MenuActionTypes.selectMenuItem,
     payload: item
   }
 }
 
-export function reducer(state = Screens.makeReservation, action) {
+export function reducer(state = Screens.makeReservation, action): MenuSelect {
   switch (action.type) {
     case MenuActionTypes.selectMenuItem:
       // TODO: Move outside of reducer

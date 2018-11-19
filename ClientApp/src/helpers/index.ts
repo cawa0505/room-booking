@@ -1,6 +1,6 @@
 import { addDays, getHours, getMinutes, setHours, setMinutes, setSeconds, setMilliseconds } from 'date-fns';
 
-export function constructDate(timeSlot, day) {
+export function constructDate(timeSlot: Date | string, day: Date | string): Date {
   const hour = getHours(new Date(timeSlot));
   const minutes = getMinutes(new Date(timeSlot));
   let date = setHours(new Date(day), hour);
@@ -10,8 +10,8 @@ export function constructDate(timeSlot, day) {
   return date;
 }
 
-export function generateDays() {
-  const numberOfDays = 5;
+export function generateDays(): Date[] {
+  const numberOfDays: number = 5;
   const days: Date[] = [];
   for (let i = 0; i < numberOfDays; i++) {
     days.push(addDays(new Date(), i));
@@ -19,10 +19,10 @@ export function generateDays() {
   return days;
 }
 
-export function generateTimeSlots(startHour = 8, endHour = 17, intervalMinutes = 60) {
+export function generateTimeSlots(startHour: number = 8, endHour: number = 17, intervalMinutes: number = 60): Date[] {
 
   const timeSlots: Date[] = [];
-  let currentTimeSlot = new Date();
+  let currentTimeSlot: Date = new Date();
 
   for (let i = startHour; i < endHour; i++) {
 

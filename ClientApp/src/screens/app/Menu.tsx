@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { Menu } from 'semantic-ui-react'
 import { Screens } from '../../ducks/menu';
+import { IAuth } from '../../ducks/auth';
 
 interface INavigationMenuProps {
-  logout
-  auth
-  selectMenuItem
+  readonly logout: () => void;
+  readonly auth: IAuth;
+  readonly selectMenuItem: (name) => void;
 }
 
 export class NavigationMenu extends React.Component<INavigationMenuProps>{

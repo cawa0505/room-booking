@@ -21,23 +21,21 @@ export interface ISelectRoom {
   payload: IRoom
 }
 
-export function getAllSuccess(rooms: IRoom[]) {
+export interface IRoomAction {
+  type: RoomActionTypes.getAll | RoomActionTypes.create;
+  payload: IRoom | IRoom[]
+}
+
+export function getAllSuccess(rooms: IRoom[]): IRoomAction {
   return {
     type: RoomActionTypes.getAll,
     payload: rooms
   }
 }
 
-export function createRoomSuccess(room: IRoom) {
+export function createRoomSuccess(room: IRoom): IRoomAction {
   return {
     type: RoomActionTypes.create,
-    payload: room
-  }
-}
-
-export function selectRoom(room) {
-  return {
-    type: RoomActionTypes.SelectRoom,
     payload: room
   }
 }
@@ -62,7 +60,7 @@ export function getAll() {
   }
 }
 
-export function reducer(state = [], action) {
+export function reducer(state: IRoom[] = [], action) {
   switch (action.type) {
     case RoomActionTypes.getAll:
       return action.payload;

@@ -6,17 +6,17 @@ import Auth from '../auth/auth.container';
 import Menu from './Menu';
 import Header from './Header';
 import * as menuActions from '../../ducks/menu';
-import { logoutLocallySuccess } from '../../ducks/auth';
+import { logoutLocallySuccess, IAuth } from '../../ducks/auth';
 import { CreateRoom } from '../rooms/components/CreateRoom';
 import { create } from '../../ducks/rooms';
 import Reservations from '../reservations/reservations.container';
 
 interface IAppProps {
-  auth
-  menu
-  selectMenuItem
-  logout
-  createRoom
+  readonly auth: IAuth
+  readonly menu;
+  readonly selectMenuItem: (menu) => void
+  readonly logout: () => void
+  readonly createRoom: (room) => void
 }
 
 class App extends React.Component<IAppProps, {}> {
