@@ -2,6 +2,27 @@
 
 > .NET Core WebApi + React + Redux + TypeScript
 
+
+![Imgur](https://i.imgur.com/qsJ5xQQ.gif)
+
+## Running
+
+```bash
+dotnet run
+```
+
+### Running and setting env variable manually
+
+```bash
+dotnet run --environment="Development"
+```
+
+### Set up database
+
+```bash
+dotnet ef database update
+```
+
 ## Setup from scratch
 
 ### Setting up new .NET Core Project with React Template
@@ -33,17 +54,6 @@ yarn add redux react-redux redux-thunk
 
 https://github.com/erikras/ducks-modular-redux
 
-## Running
-
-```bash
-dotnet run
-```
-
-### Running and setting env variable manually
-
-```bash
-dotnet run --environment="Development"
-```
 
 ## Adding a Database
 

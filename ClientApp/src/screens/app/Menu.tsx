@@ -39,7 +39,7 @@ export class NavigationMenu extends React.Component<INavigationMenuProps>{
           <Menu.Item name={Screens.createRoom} active={activeItem === Screens.createRoom} onClick={this.handleItemClick}>
             Create Room
           </Menu.Item>
-          <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.logout}>
+          <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.props.logout}>
             Logout
           </Menu.Item>
         </Menu>
