@@ -1,23 +1,23 @@
 import * as React from 'react'
 import { Menu } from 'semantic-ui-react'
-import { Screens } from '../../ducks/menu';
+import { Screens, MenuSelect } from '../../ducks/menu';
 import { IAuth } from '../../ducks/auth';
 
 interface INavigationMenuProps {
   readonly logout: () => void;
   readonly auth: IAuth;
-  readonly selectMenuItem: (name) => void;
+  readonly selectMenuItem: (name: MenuSelect) => void;
 }
 
 export class NavigationMenu extends React.Component<INavigationMenuProps>{
   public state = { activeItem: 'login' }
 
-  public handleItemClick = (e, { name }) => {
+  public handleItemClick = (e: React.MouseEvent<HTMLElement>, { name }: { name: MenuSelect }) => {
     this.props.selectMenuItem(name);
     this.setState({ activeItem: name })
   }
 
-  public logout() {
+  public logout(): void {
     const confirm = window.confirm("Are you sure?");
     if (confirm) {
       this.props.logout();
@@ -39,7 +39,7 @@ export class NavigationMenu extends React.Component<INavigationMenuProps>{
           <Menu.Item name={Screens.createRoom} active={activeItem === Screens.createRoom} onClick={this.handleItemClick}>
             Create Room
           </Menu.Item>
-          <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.logout}>
+          <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.props.logout}>
             Logout
           </Menu.Item>
         </Menu>

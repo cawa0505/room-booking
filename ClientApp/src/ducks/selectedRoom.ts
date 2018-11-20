@@ -1,8 +1,13 @@
-import { RoomActionTypes } from './rooms';
+import { RoomActionTypes, IRoom } from './rooms';
 import { ReservationActionTypes } from './reservations';
 import initialState from '../store/initialState';
 
-export function selectRoom(room) {
+export interface ISelectRoomAction {
+  type: RoomActionTypes.SelectRoom;
+  payload: IRoom;
+}
+
+export function selectRoom(room: IRoom): ISelectRoomAction {
   return {
     type: RoomActionTypes.SelectRoom,
     payload: room

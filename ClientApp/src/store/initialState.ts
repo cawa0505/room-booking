@@ -2,6 +2,7 @@ const initalState = {
   rooms: [],
   reservations: [],
   selectedRoom: {
+    roomId: 0,
     id: 0,
     location: "A000",
     floor: 0,

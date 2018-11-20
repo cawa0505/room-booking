@@ -5,18 +5,19 @@ import Rooms from '../rooms/rooms.container';
 import Auth from '../auth/auth.container';
 import Menu from './Menu';
 import Header from './Header';
-import * as menuActions from '../../ducks/menu';
+import { MenuSelect, Screens, selectMenuItem } from '../../ducks/menu';
 import { logoutLocallySuccess, IAuth } from '../../ducks/auth';
 import { CreateRoom } from '../rooms/components/CreateRoom';
-import { create } from '../../ducks/rooms';
+import { create, IRoom } from '../../ducks/rooms';
 import Reservations from '../reservations/reservations.container';
+import { IApplicationState } from '../../store/index';
 
 interface IAppProps {
   readonly auth: IAuth
-  readonly menu;
-  readonly selectMenuItem: (menu) => void
+  readonly menu: MenuSelect;
+  readonly selectMenuItem: (menu: MenuSelect) => void
   readonly logout: () => void
-  readonly createRoom: (room) => void
+  readonly createRoom: (room: IRoom) => void
 }
 
 class App extends React.Component<IAppProps, {}> {
@@ -32,9 +33,9 @@ class App extends React.Component<IAppProps, {}> {
           <Grid.Column computer={12} mobile={16} tablet={16}>
             {
               this.props.auth.loggedIn
-                ? this.props.menu === menuActions.Screens.makeReservation
+                ? this.props.menu === Screens.makeReservation
                   ? <Rooms />
-                  : this.props.menu === menuActions.Screens.yourReservations
+                  : this.props.menu === Screens.yourReservations
                     ? <Reservations />
                     : <CreateRoom create={this.props.createRoom} />
                 : <Auth />
@@ -46,15 +47,15 @@ class App extends React.Component<IAppProps, {}> {
   }
 }
 
-function mapStateToProps({ menu, auth }) {
+function mapStateToProps({ menu, auth }: IApplicationState) {
   return { menu, auth }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    selectMenuItem: (item) => dispatch(menuActions.selectMenuItem(item)),
+    selectMenuItem: (item: MenuSelect) => dispatch(selectMenuItem(item)),
     logout: () => dispatch(logoutLocallySuccess()),
-    createRoom: (room) => dispatch(create(room))
+    createRoom: (room: IRoom) => dispatch(create(room))
   }
 }
 

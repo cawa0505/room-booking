@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { List, Button, Header } from 'semantic-ui-react';
 import { format } from 'date-fns';
+import { IReservation } from '../../../ducks/reservations';
 
 interface IReservationsProps {
-  reservations
-  getAll
-  deleteOne
+  readonly reservations: IReservation[]
+  readonly getAll: () => void
+  readonly deleteOne: (reservation: IReservation) => void
 }
 
 export class Reservations extends React.Component<IReservationsProps> {

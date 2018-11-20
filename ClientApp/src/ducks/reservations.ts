@@ -18,7 +18,7 @@ export const enum ReservationActionTypes {
   deleteOne = '[@reservation]: delete',
 }
 
-interface IReservationAction {
+export interface IReservationAction {
   type: ReservationActionTypes.getAll
   | ReservationActionTypes.getOne
   | ReservationActionTypes.create

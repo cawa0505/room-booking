@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Divider, Table, Button, Dropdown } from 'semantic-ui-react';
 import { format, addHours } from 'date-fns';
 import { IRoom } from '../../../ducks/rooms';
+import { IAuth } from '../../../ducks/auth';
 import { generateDays, generateTimeSlots } from '../../../helpers';
 import TimeSlotCell from './TimeSlotCell';
 import initialState from '../../../store/initialState';
@@ -9,11 +10,11 @@ import initialState from '../../../store/initialState';
 interface IPropsFromState {
   readonly rooms: IRoom[]
   readonly selectedRoom: IRoom
-  readonly auth
-  readonly getAll: () => any
-  readonly selectRoom: (room) => any
-  readonly makeReservation: (date) => any
-  readonly deleteReservation: (room) => any
+  readonly auth: IAuth;
+  readonly getAll: () => void
+  readonly selectRoom: (room: IRoom) => void
+  readonly makeReservation: (reservation) => void
+  readonly deleteReservation: (reservation) => void
 }
 
 export class RoomList extends React.Component<IPropsFromState>{
@@ -36,7 +37,7 @@ export class RoomList extends React.Component<IPropsFromState>{
     this.props.selectRoom(initialState.selectedRoom);
   }
 
-  public selectDate = (date) => {
+  public selectDate = (date: Date) => {
     this.setState({ selectedDate: date });
   }
 

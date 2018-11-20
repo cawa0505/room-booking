@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { IApplicationState } from '../../store';
 import Reservations from './components/Reservations';
-import * as reservationActions from '../../ducks/reservations';
+import { deleteOne, getAll, IReservation } from '../../ducks/reservations';
 
 function mapStateToProps({ reservations }: IApplicationState) {
   return { reservations }
@@ -9,8 +9,8 @@ function mapStateToProps({ reservations }: IApplicationState) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getAll: () => dispatch(reservationActions.getAll()),
-    deleteOne: (item) => dispatch(reservationActions.deleteOne(item))
+    getAll: () => dispatch(getAll()),
+    deleteOne: (item: IReservation) => dispatch(deleteOne(item))
   }
 }
 
