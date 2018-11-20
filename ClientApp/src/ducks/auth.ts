@@ -1,9 +1,14 @@
 import axios from 'axios';
 import initialState from '../store/initialState';
 
+export interface IUserObject {
+  email: string;
+  password: string;
+}
+
 export interface IAuth {
   loggedIn: boolean;
-  user: string;
+  user: string | IUserObject;
 }
 
 export const enum AuthActionTypes {
@@ -18,20 +23,20 @@ export interface IAuthAction {
   | AuthActionTypes.loginLocal
   | AuthActionTypes.register
   | AuthActionTypes.logoutLocal,
-  payload: IAuth | string
+  payload: IUserObject | string
 }
 
-export function loginSuccess(authObject): IAuthAction {
+export function loginSuccess(user: IUserObject): IAuthAction {
   return {
     type: AuthActionTypes.login,
-    payload: authObject
+    payload: user
   }
 }
 
-export function loginLocallySuccess(email: string): IAuthAction {
+export function loginLocallySuccess(user: IUserObject): IAuthAction {
   return {
     type: AuthActionTypes.loginLocal,
-    payload: email
+    payload: user
   }
 }
 
@@ -49,23 +54,23 @@ export function registerSuccess(user: string): IAuthAction {
   }
 }
 
-export function login(authObject) {
+export function login(user: IUserObject) {
   return async (dispatch) => {
     try {
-      const result = await axios.post('/api/account/login', authObject);
+      const result = await axios.post('/api/account/login', user);
       storeToken(result.data.token);
-      dispatch(loginSuccess({ loggedIn: true, user: { email: authObject.email } }));
+      dispatch(loginSuccess(user));
     } catch (error) {
       dispatch({ type: '[@errors]', payload: error });
     }
   }
 }
 
-export function register(authObject) {
+export function register(user: IUserObject) {
   return async (dispatch) => {
     try {
-      const result = await axios.post('/api/account/register', authObject);
-      dispatch(registerSuccess(authObject.email));
+      const result = await axios.post('/api/account/register', user);
+      dispatch(registerSuccess(user.email));
       dispatch({ type: 'RESPONSE', payload: result });
     } catch (error) {
       dispatch({ type: '[@errors]', payload: error });
@@ -77,7 +82,7 @@ export function storeToken(token: string): void {
   sessionStorage.setItem('jwtToken', token);
 }
 
-export function reducer(state: IAuth = initialState.auth, action): IAuth {
+export function reducer(state: IAuth = initialState.auth, action: IAuthAction): IAuth {
   switch (action.type) {
     case AuthActionTypes.loginLocal:
       return { loggedIn: true, user: action.payload };

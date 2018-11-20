@@ -3,14 +3,14 @@ import thunk from 'redux-thunk';
 import roomsReducer, { IRoom } from '../ducks/rooms';
 import reservationsReducer, { IReservation } from '../ducks/reservations';
 import singleRoomReducer from '../ducks/selectedRoom';
-import menuReducer from '../ducks/menu';
+import menuReducer, { MenuSelect } from '../ducks/menu';
 import authReducer, { IAuth } from '../ducks/auth';
 
 export interface IApplicationState {
   readonly rooms: IRoom[];
   readonly reservations: IReservation[];
   readonly selectedRoom: IRoom;
-  readonly menu;
+  readonly menu: MenuSelect;
   readonly auth: IAuth;
 }
 

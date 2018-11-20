@@ -1,8 +1,10 @@
 import axios from 'axios';
-import { ReservationActionTypes, IReservation } from './reservations';
+import { IReservation, ReservationActionTypes } from './reservations';
+import { Screens, selectMenuItem } from './menu';
 
 export interface IRoom {
   id: number;
+  roomId: number;
   location: string;
   floor: number;
   size: number;
@@ -22,7 +24,8 @@ export interface ISelectRoom {
 }
 
 export interface IRoomAction {
-  type: RoomActionTypes.getAll | RoomActionTypes.create;
+  type: RoomActionTypes.getAll
+  | RoomActionTypes.create
   payload: IRoom | IRoom[]
 }
 
@@ -47,6 +50,7 @@ export function create(room) {
       const [id] = response.headers.location.split('/').slice(-1);
       const updatedRoom = Object.assign({}, room, { id: parseInt(id, 10), reservations: [] });
       dispatch(createRoomSuccess(updatedRoom));
+      dispatch(selectMenuItem(Screens.makeReservation))
     } catch (error) {
       dispatch({ type: '[@errors]', payload: error });
     }
@@ -60,6 +64,7 @@ export function getAll() {
   }
 }
 
+// TODO: Problems with typing this thing
 export function reducer(state: IRoom[] = [], action) {
   switch (action.type) {
     case RoomActionTypes.getAll:

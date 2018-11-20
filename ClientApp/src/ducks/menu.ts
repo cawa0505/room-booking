@@ -3,13 +3,13 @@ export const enum MenuActionTypes {
 }
 
 export const enum Screens {
-  createRoom = 'createRoom',
-  makeReservation = 'makeReservation',
-  login = 'login',
-  yourReservations = 'yourReservations'
+  createRoom = '[@screen] create room',
+  makeReservation = '[@screen] make reservation',
+  login = '[@screen] login',
+  yourReservations = '[@screen] your reservations'
 }
 
-type MenuSelect = Screens.createRoom | Screens.makeReservation | Screens.login | Screens.yourReservations;
+export type MenuSelect = Screens.createRoom | Screens.makeReservation | Screens.login | Screens.yourReservations;
 
 export interface IMenuAction {
   type: MenuActionTypes.selectMenuItem,
@@ -23,7 +23,7 @@ export function selectMenuItem(item: MenuSelect): IMenuAction {
   }
 }
 
-export function reducer(state = Screens.makeReservation, action): MenuSelect {
+export function reducer(state: MenuSelect = Screens.makeReservation, action: IMenuAction): MenuSelect {
   switch (action.type) {
     case MenuActionTypes.selectMenuItem:
       // TODO: Move outside of reducer

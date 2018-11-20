@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { IApplicationState } from '../../store';
 import RoomList from './components/RoomList';
-import * as roomActions from '../../ducks/rooms';
+import { IRoom, getAll } from '../../ducks/rooms';
 import { selectRoom } from '../../ducks/selectedRoom';
-import * as reservationActions from '../../ducks/reservations';
+import { create, deleteOne } from '../../ducks/reservations';
 
 function mapStateToProps({ rooms, selectedRoom, auth }: IApplicationState) {
   return { rooms, selectedRoom, auth }
@@ -11,10 +11,10 @@ function mapStateToProps({ rooms, selectedRoom, auth }: IApplicationState) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getAll: () => dispatch(roomActions.getAll()),
-    selectRoom: (room) => dispatch(selectRoom(room)),
-    makeReservation: (date) => dispatch(reservationActions.create(date)),
-    deleteReservation: (reservation) => dispatch(reservationActions.deleteOne(reservation))
+    getAll: () => dispatch(getAll()),
+    selectRoom: (room: IRoom) => dispatch(selectRoom(room)),
+    makeReservation: (reservation) => dispatch(create(reservation)),
+    deleteReservation: (reservation) => dispatch(deleteOne(reservation))
   }
 }
 

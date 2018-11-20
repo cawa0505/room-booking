@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { Form, Button } from 'semantic-ui-react';
+import { IUserObject, IAuth } from '../../../ducks/auth';
 
 interface IAuthScreenProps {
-  readonly login
-  readonly register
-  readonly loginLocal
-  readonly error
-  readonly auth
-  readonly logout
+  readonly login: (user: IUserObject) => void;
+  readonly register: (user: IUserObject) => void;
+  readonly loginLocal: (user: IUserObject) => void;
+  readonly error: () => void;
+  readonly auth: IAuth
+  readonly logout: () => void;
 }
 
 interface IAuthScreenState {
@@ -21,14 +22,14 @@ export class AuthScreen extends React.Component<IAuthScreenProps, IAuthScreenSta
     password: ''
   }
 
-  public changeEmail = ({ target }) => this.setState({ email: target.value })
-  public changePassword = ({ target }) => this.setState({ password: target.value })
+  public changeEmail = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ email: e.target.value })
+  public changePassword = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ password: e.target.value })
 
-  public onSubmit = (event) => {
-    event.preventDefault();
+  public onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     const { email, password } = this.state;
     if (password === "bunneltan") {
-      this.props.loginLocal(email);
+      this.props.loginLocal({ email, password });
       sessionStorage.setItem('email', email);
     } else {
       this.props.error();

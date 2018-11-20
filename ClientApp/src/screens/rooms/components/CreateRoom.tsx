@@ -5,11 +5,11 @@ interface IState {
   location: string
   floor: number
   size: number
-  roomType: number
+  type: number
 }
 
 interface IProps {
-  create: (newRoom) => any
+  readonly create: (newRoom: IState) => void
 }
 
 const floorOptions = [
@@ -34,22 +34,29 @@ export class CreateRoom extends React.Component<IProps, IState>{
     location: '',
     floor: 0,
     size: 4,
-    roomType: 0
+    type: 0
   }
 
-  public changeLocation = (e, { value }) => this.setState({ location: value });
-  public changeFloor = (e, { value }) => this.setState({ floor: parseInt(value, 10) });
-  public changeRoomType = (e, { value }) => this.setState({ roomType: parseInt(value, 10) });
-  public changeSize = (e, { value }) => this.setState({ size: parseInt(value, 10) });
+  public changeLocation = (e: React.SyntheticEvent, { value }: { value: string }) =>
+    this.setState({ location: value });
+
+  public changeFloor = (e: React.SyntheticEvent, { value }: { value: string }) =>
+    this.setState({ floor: parseInt(value, 10) });
+
+  public changeRoomType = (e: React.SyntheticEvent, { value }: { value: string }) =>
+    this.setState({ type: parseInt(value, 10) });
+
+  public changeSize = (e: React.SyntheticEvent, { value }: { value: string }) =>
+    this.setState({ size: parseInt(value, 10) });
 
 
-  public onSubmit = (event) => {
+  public onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     this.props.create({
       location: this.state.location,
       floor: this.state.floor,
       size: this.state.size,
-      type: this.state.roomType
+      type: this.state.type
     })
   }
 

@@ -2,12 +2,13 @@ import * as React from 'react';
 import { Table, Icon } from 'semantic-ui-react';
 import { format, isEqual } from 'date-fns';
 import { constructDate } from '../../../helpers';
+import { IReservation } from '../../../ducks/reservations';
 
 interface ITimeSlotProps {
   readonly timeSlot: string;
   readonly day: Date;
-  readonly reservations;
-  readonly selectDate: (date) => any;
+  readonly reservations: IReservation[];
+  readonly selectDate: (date: Date) => void;
   readonly selectedDate: string;
 }
 
