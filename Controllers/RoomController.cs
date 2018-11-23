@@ -12,7 +12,6 @@ namespace RoomBooking.Controllers
   [Route("api/[controller]")]
   [Produces("application/json")]
   [ApiController]
-  [Authorize]
   public class RoomController : Controller
   {
     private readonly RoomBookingContext _context;
