@@ -5,11 +5,11 @@ import { constructDate } from '../../../helpers';
 import { IReservation } from '../../../ducks/reservations';
 
 interface ITimeSlotProps {
-  readonly timeSlot: string;
+  readonly timeSlot: Date;
   readonly day: Date;
   readonly reservations: IReservation[];
   readonly selectDate: (date: Date) => void;
-  readonly selectedDate: string;
+  readonly selectedDate: Date;
 }
 
 class TimeSlotCell extends React.PureComponent<ITimeSlotProps, {}>{
@@ -18,8 +18,8 @@ class TimeSlotCell extends React.PureComponent<ITimeSlotProps, {}>{
     const { timeSlot, day } = this.props;
     let reserved = null;
     for (const reservation of this.props.reservations) {
-      const checkDate = (new Date(reservation.startTime).getHours() === new Date(timeSlot).getHours())
-        && (new Date(day).getDay() === new Date(reservation.startTime).getDay())
+      const checkDate = ((new Date(reservation.startTime).getHours() === timeSlot.getHours())
+        && day.getDay() === new Date(reservation.startTime).getDay())
       if (checkDate) {
         reserved = reservation;
         break;

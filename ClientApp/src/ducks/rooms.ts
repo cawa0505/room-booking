@@ -15,11 +15,11 @@ export interface IRoom {
 export const enum RoomActionTypes {
   getAll = '[@rooms]: getAll',
   create = '[@rooms]: create',
-  SelectRoom = '[@rooms]: SelectRoom'
+  selectRoom = '[@rooms]: selectRoom'
 }
 
-export interface ISelectRoom {
-  type: RoomActionTypes.SelectRoom;
+export interface IselectRoom {
+  type: RoomActionTypes.selectRoom;
   payload: IRoom
 }
 
@@ -43,7 +43,7 @@ export function createRoomSuccess(room: IRoom): IRoomAction {
   }
 }
 
-export function create(room) {
+export function create(room: IRoom) {
   return async (dispatch) => {
     try {
       const response = await axios.post('/api/room', room);

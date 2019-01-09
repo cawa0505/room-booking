@@ -6,8 +6,9 @@ import { IAuth } from '../../../ducks/auth';
 import { generateDays, generateTimeSlots } from '../../../helpers';
 import TimeSlotCell from './TimeSlotCell';
 import initialState from '../../../store/initialState';
+import { IMakeReservation } from 'src/ducks/reservations';
 
-interface IPropsFromState {
+interface IRoomListProps {
   readonly rooms: IRoom[]
   readonly selectedRoom: IRoom
   readonly auth: IAuth;
@@ -17,12 +18,18 @@ interface IPropsFromState {
   readonly deleteReservation: (reservation) => void
 }
 
-export class RoomList extends React.Component<IPropsFromState>{
+interface IRoomListState {
+  days: Date[];
+  timeSlots: Date[];
+  selectedDate: Date;
+}
+
+export class RoomList extends React.Component<IRoomListProps, IRoomListState>{
 
   public state = {
     days: [],
     timeSlots: [],
-    selectedDate: '',
+    selectedDate: new Date(),
   }
 
   public async componentDidMount() {
@@ -93,13 +100,13 @@ export class RoomList extends React.Component<IPropsFromState>{
   public makeReservation = () => {
     const startTime = format(this.state.selectedDate);
     const endTime = format(addHours(this.state.selectedDate, 1));
-    const reservation = {
+    const reservation: IMakeReservation = {
       reservedBy: this.props.auth.user,
       roomId: this.props.selectedRoom.id,
       startTime,
       endTime,
       length: 1
-    }
+    };
     this.props.makeReservation(reservation);
   }
 

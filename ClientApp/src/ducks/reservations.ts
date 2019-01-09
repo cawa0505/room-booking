@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { IRoom } from './rooms';
+import { IUserObject } from './auth';
 
 export interface IReservation {
   id: number;
@@ -9,6 +10,14 @@ export interface IReservation {
   endTime: string;
   length: number;
   room: IRoom
+}
+
+export interface IMakeReservation {
+  reservedBy: IUserObject | string;
+  roomId: number;
+  startTime: string;
+  endTime: string;
+  length: number;
 }
 
 export const enum ReservationActionTypes {
