@@ -9,7 +9,7 @@ interface INavigationMenuProps {
   readonly selectMenuItem: (name: MenuSelect) => void;
 }
 
-export class NavigationMenu extends React.Component<INavigationMenuProps>{
+export class NavigationMenu extends React.PureComponent<INavigationMenuProps>{
   public state = { activeItem: 'login' }
 
   public handleItemClick = (e: React.MouseEvent<HTMLElement>, { name }: { name: MenuSelect }) => {

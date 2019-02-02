@@ -14,36 +14,20 @@ export interface IAuth {
 export const enum AuthActionTypes {
   login = '[@auth] login successful',
   register = '[@auth] register successful',
-  loginLocal = '[@auth] login locally successful',
-  logoutLocal = '[@auth] logout locally successful'
+  logout = '[@auth] logout locally successful'
 }
 
 export interface IAuthAction {
   type: AuthActionTypes.login
-  | AuthActionTypes.loginLocal
+  | AuthActionTypes.logout
   | AuthActionTypes.register
-  | AuthActionTypes.logoutLocal,
-  payload: IUserObject | string
+  payload?: IUserObject | string
 }
 
 export function loginSuccess(user: IUserObject): IAuthAction {
   return {
     type: AuthActionTypes.login,
     payload: user
-  }
-}
-
-export function loginLocallySuccess(user: IUserObject): IAuthAction {
-  return {
-    type: AuthActionTypes.loginLocal,
-    payload: user
-  }
-}
-
-export function logoutLocallySuccess(): IAuthAction {
-  return {
-    type: AuthActionTypes.logoutLocal,
-    payload: ''
   }
 }
 
@@ -59,6 +43,7 @@ export function login(user: IUserObject) {
     try {
       const result = await axios.post('/api/account/login', user);
       storeToken(result.data.token);
+      storeUser(user.email);
       dispatch(loginSuccess(user));
     } catch (error) {
       dispatch({ type: '[@errors]', payload: error });
@@ -78,17 +63,27 @@ export function register(user: IUserObject) {
   }
 }
 
+export function logout(): IAuthAction {
+  sessionStorage.removeItem('jwtToken');
+  sessionStorage.removeItem('user');
+  return {
+    type: AuthActionTypes.logout,
+  }
+}
+
 export function storeToken(token: string): void {
   sessionStorage.setItem('jwtToken', token);
 }
 
+export function storeUser(user: string): void {
+  sessionStorage.setItem('user', user);
+}
+
 export function reducer(state: IAuth = initialState.auth, action: IAuthAction): IAuth {
   switch (action.type) {
-    case AuthActionTypes.loginLocal:
+    case AuthActionTypes.login:
       return { loggedIn: true, user: action.payload };
-    case AuthActionTypes.logoutLocal:
-      // TODO: move outside of reducer
-      sessionStorage.removeItem('email');
+    case AuthActionTypes.logout:
       return initialState.auth;
     default:
       return state;

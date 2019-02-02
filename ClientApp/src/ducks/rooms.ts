@@ -15,11 +15,11 @@ export interface IRoom {
 export const enum RoomActionTypes {
   getAll = '[@rooms]: getAll',
   create = '[@rooms]: create',
-  SelectRoom = '[@rooms]: SelectRoom'
+  selectRoom = '[@rooms]: selectRoom'
 }
 
-export interface ISelectRoom {
-  type: RoomActionTypes.SelectRoom;
+export interface IselectRoom {
+  type: RoomActionTypes.selectRoom;
   payload: IRoom
 }
 
@@ -43,7 +43,7 @@ export function createRoomSuccess(room: IRoom): IRoomAction {
   }
 }
 
-export function create(room) {
+export function create(room: IRoom) {
   return async (dispatch) => {
     try {
       const response = await axios.post('/api/room', room);
@@ -59,9 +59,14 @@ export function create(room) {
 
 export function getAll() {
   return async (dispatch) => {
-    const { data } = await axios.get('/api/room');
+    const { data } = await axios.get('/api/room', formatHeaders());
     dispatch(getAllSuccess(data));
   }
+}
+
+function formatHeaders() {
+  const jwtToken = sessionStorage.getItem('jwtToken') || '';
+  return { headers: { Authorization: 'Bearer ' + jwtToken } }
 }
 
 // TODO: Problems with typing this thing
@@ -77,7 +82,10 @@ export function reducer(state: IRoom[] = [], action) {
         : room
       )
     case ReservationActionTypes.deleteOne:
-      return state.map(room => room.id === action.payload.roomId ? room.reservations.filter(r => r.id !== action.payload.id) : room);
+      return state.map(room => room.id === action.payload.roomId
+        ? room.reservations
+          .filter(r => r.id !== action.payload.id)
+        : room);
     default:
       return state;
   }
