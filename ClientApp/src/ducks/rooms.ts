@@ -59,9 +59,14 @@ export function create(room: IRoom) {
 
 export function getAll() {
   return async (dispatch) => {
-    const { data } = await axios.get('/api/room');
+    const { data } = await axios.get('/api/room', formatHeaders());
     dispatch(getAllSuccess(data));
   }
+}
+
+function formatHeaders() {
+  const jwtToken = sessionStorage.getItem('jwtToken') || '';
+  return { headers: { Authorization: 'Bearer ' + jwtToken } }
 }
 
 // TODO: Problems with typing this thing
@@ -77,7 +82,10 @@ export function reducer(state: IRoom[] = [], action) {
         : room
       )
     case ReservationActionTypes.deleteOne:
-      return state.map(room => room.id === action.payload.roomId ? room.reservations.filter(r => r.id !== action.payload.id) : room);
+      return state.map(room => room.id === action.payload.roomId
+        ? room.reservations
+          .filter(r => r.id !== action.payload.id)
+        : room);
     default:
       return state;
   }

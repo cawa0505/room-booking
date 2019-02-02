@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RoomBooking.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RoomBooking.Controllers
 {
   [Route("api/[controller]")]
   [Produces("application/json")]
   [ApiController]
+  [Authorize]
   public class ReservationController : Controller
   {
     private readonly RoomBookingContext _context;

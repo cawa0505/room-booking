@@ -84,8 +84,6 @@ export function reducer(state: IAuth = initialState.auth, action: IAuthAction): 
     case AuthActionTypes.login:
       return { loggedIn: true, user: action.payload };
     case AuthActionTypes.logout:
-      // TODO: move outside of reducer
-
       return initialState.auth;
     default:
       return state;
