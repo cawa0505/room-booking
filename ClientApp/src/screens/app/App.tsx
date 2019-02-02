@@ -6,7 +6,7 @@ import Auth from '../auth/auth.container';
 import Menu from './Menu';
 import Header from './Header';
 import { MenuSelect, Screens, selectMenuItem } from '../../ducks/menu';
-import { logoutLocallySuccess, IAuth } from '../../ducks/auth';
+import { logout, IAuth } from '../../ducks/auth';
 import { CreateRoom } from '../rooms/components/CreateRoom';
 import { create, IRoom } from '../../ducks/rooms';
 import Reservations from '../reservations/reservations.container';
@@ -54,7 +54,7 @@ function mapStateToProps({ menu, auth }: IApplicationState) {
 function mapDispatchToProps(dispatch) {
   return {
     selectMenuItem: (item: MenuSelect) => dispatch(selectMenuItem(item)),
-    logout: () => dispatch(logoutLocallySuccess()),
+    logout: () => dispatch(logout()),
     createRoom: (room: IRoom) => dispatch(create(room))
   }
 }

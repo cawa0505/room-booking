@@ -5,38 +5,33 @@ import { IUserObject, IAuth } from '../../../ducks/auth';
 interface IAuthScreenProps {
   readonly login: (user: IUserObject) => void;
   readonly register: (user: IUserObject) => void;
-  readonly loginLocal: (user: IUserObject) => void;
   readonly error: () => void;
   readonly auth: IAuth
   readonly logout: () => void;
 }
 
 interface IAuthScreenState {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 export class AuthScreen extends React.Component<IAuthScreenProps, IAuthScreenState> {
+
   public state = {
     email: '',
     password: ''
   }
 
-  public changeEmail = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ email: e.target.value })
-  public changePassword = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ password: e.target.value })
+  private changeEmail = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ email: e.target.value })
+  private changePassword = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ password: e.target.value })
 
-  public onSubmit = (e: React.FormEvent) => {
+  private onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const { email, password } = this.state;
-    if (password === "bunneltan") {
-      this.props.loginLocal({ email, password });
-      sessionStorage.setItem('email', email);
-    } else {
-      this.props.error();
-    }
+    this.props.login({ email, password });
   }
 
-  public register = () => {
+  private register = () => {
     const { email, password } = this.state;
     this.props.register({
       email,
@@ -72,6 +67,7 @@ export class AuthScreen extends React.Component<IAuthScreenProps, IAuthScreenSta
           />
         </Form.Field>
         <Button type="submit" color="green"> Login </Button>
+        <Button type="button" color="red" onClick={this.register}> Register </Button>
       </Form>
     );
   }
